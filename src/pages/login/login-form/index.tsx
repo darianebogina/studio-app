@@ -2,19 +2,13 @@
 
 import { useState, type FormEvent } from 'react';
 import Link from 'next/link';
-import { createClient } from '@/shared/api/supabase/client';
+import { getAuthErrorMessage, MagicLinkSent, sendOtp } from '@/features/auth';
+import type { FormStatus } from '@/shared/types';
 import styles from './styles.module.scss';
-
-type Status = 'idle' | 'loading' | 'success' | 'error';
-
-const getErrorMessage = (message: string) =>
-    message === 'Signups not allowed for otp'
-        ? 'Аккаунт не найден. Сначала зарегистрируйтесь.'
-        : 'Не удалось отправить письмо. Попробуйте позже.';
 
 export const LoginForm = () => {
     const [email, setEmail] = useState('');
-    const [status, setStatus] = useState<Status>('idle');
+    const [status, setStatus] = useState<FormStatus>('idle');
     const [errorMessage, setErrorMessage] = useState('');
 
     const handleSubmit = async (e: FormEvent) => {
@@ -22,19 +16,11 @@ export const LoginForm = () => {
         setStatus('loading');
         setErrorMessage('');
 
-        const supabase = createClient();
-
-        const { error } = await supabase.auth.signInWithOtp({
-            email,
-            options: {
-                emailRedirectTo: `${window.location.origin}/auth/callback`,
-                shouldCreateUser: false,
-            },
-        });
+        const { error } = await sendOtp({ email, shouldCreateUser: false });
 
         if (error) {
             setStatus('error');
-            setErrorMessage(getErrorMessage(error.message));
+            setErrorMessage(getAuthErrorMessage(error.message, 'Не удалось отправить письмо. Попробуйте позже.'));
             return;
         }
 
@@ -45,15 +31,12 @@ export const LoginForm = () => {
 
     if (status === 'success') {
         return (
-            <div className={styles.success}>
-                <p className={styles.successTitle}>Проверьте почту</p>
-                <p className={styles.successText}>
-                    На <b>{email}</b> отправлена ссылка для входа. Откройте её на этом устройстве.
-                </p>
-                <button type="button" onClick={handleReset} className={styles.linkButton}>
-                    Отправить ещё раз
-                </button>
-            </div>
+            <MagicLinkSent
+                email={email}
+                text="отправлена ссылка для входа. Откройте её на этом устройстве."
+                onReset={handleReset}
+                resetLabel="Отправить ещё раз"
+            />
         );
     }
 

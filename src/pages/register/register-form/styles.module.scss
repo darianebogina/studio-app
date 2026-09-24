@@ -6,6 +6,18 @@
     gap: 10px;
 }
 
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+}
+
+.label {
+    font-size: 11px;
+    color: var(--color-text-placeholder);
+    padding-left: var(--space-1);
+}
+
 .input {
     @include disabled;
     background: var(--color-surface);
@@ -36,6 +48,13 @@
     font-size: var(--font-size-md);
     font-weight: var(--font-weight-medium);
     margin-top: var(--space-1);
+}
+
+.hint {
+    font-size: 11px;
+    color: var(--color-text-placeholder);
+    text-align: center;
+    margin: var(--space-2) 0 0;
 }
 
 .link {

@@ -1,5 +1,5 @@
 import { type NextRequest } from 'next/server';
-import { updateSession } from '@/shared/api/supabase/proxy';
+import { updateSession } from '@/shared/api/proxy';
 
 export const proxy = (request: NextRequest) => updateSession(request);
 

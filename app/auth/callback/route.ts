@@ -1,1 +1,1 @@
-export { authCallbackHandler as GET } from '@/features/auth';
+export { authCallbackHandler as GET } from '@/features/auth/server';
