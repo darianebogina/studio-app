@@ -1,0 +1,1 @@
+export { GET as authCallbackHandler } from './api/callback';
