@@ -1,0 +1,61 @@
+:root {
+    // Цвета: фон и поверхности
+    --color-bg: #000;
+    --color-surface: #1a1a1a;
+    --color-border: #333;
+    --color-hover: rgba(255, 255, 255, 0.04);
+
+    // Цвета: текст
+    --color-text-primary: #fff;
+    --color-text-secondary: #ccc;
+    --color-text-muted: #888;
+    --color-text-placeholder: #666;
+
+    // Цвета: акцент и статусы
+    --color-accent: #00e676;
+    --color-on-accent: #000;
+    --color-danger: #e24b4a;
+    --color-danger-bg: rgba(226, 75, 74, 0.1);
+
+    // Шрифты
+    --font-sans: var(--font-geist), system-ui, -apple-system, sans-serif;
+
+    // Размеры шрифта
+    --font-size-xs: 12px;
+    --font-size-sm: 13px;
+    --font-size-md: 14px;
+    --font-size-lg: 18px;
+    --font-size-xl: 22px;
+    --font-size-display: 56px;
+
+    // Насыщенность
+    --font-weight-regular: 400;
+    --font-weight-medium: 500;
+
+    // Межстрочный интервал
+    --line-height-tight: 1.2;
+    --line-height-normal: 1.5;
+    --line-height-relaxed: 1.6;
+
+    // Отступы (шаг 4px)
+    --space-1: 4px;
+    --space-2: 8px;
+    --space-3: 12px;
+    --space-4: 16px;
+    --space-5: 20px;
+    --space-6: 24px;
+    --space-8: 32px;
+    --space-10: 40px;
+
+    // Скругления
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-full: 9999px;
+
+    // Границы
+    --border-thin: 0.5px solid var(--color-border);
+
+    // Состояния
+    --opacity-disabled: 0.5;
+    --transition-fast: 0.15s ease;
+}

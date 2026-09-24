@@ -1,0 +1,33 @@
+@mixin text-display {
+    font-size: var(--font-size-display);
+    line-height: var(--line-height-tight);
+}
+
+@mixin text-title {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-medium);
+    line-height: var(--line-height-tight);
+    color: var(--color-text-primary);
+}
+
+@mixin text-subtitle {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-medium);
+    line-height: var(--line-height-tight);
+}
+
+@mixin text-body {
+    font-size: var(--font-size-md);
+    line-height: var(--line-height-normal);
+}
+
+@mixin text-secondary {
+    font-size: var(--font-size-sm);
+    line-height: var(--line-height-normal);
+    color: var(--color-text-muted);
+}
+
+@mixin text-caption {
+    font-size: var(--font-size-xs);
+    line-height: var(--line-height-normal);
+}

@@ -1,0 +1,92 @@
+@use '@/shared/ui-kit/styles' as *;
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.input {
+    @include disabled;
+    background: var(--color-surface);
+    border: var(--border-thin);
+    border-radius: var(--radius-md);
+    padding: 14px var(--space-4);
+    font-size: var(--font-size-md);
+    color: var(--color-text-primary);
+    outline: none;
+    font-family: inherit;
+
+    &:focus {
+        border-color: var(--color-accent);
+    }
+
+    &::placeholder {
+        color: var(--color-text-placeholder);
+    }
+}
+
+.button {
+    @include reset-button;
+    @include disabled;
+    background: var(--color-accent);
+    color: var(--color-on-accent);
+    border-radius: var(--radius-md);
+    padding: 14px;
+    font-size: var(--font-size-md);
+    font-weight: var(--font-weight-medium);
+    margin-top: var(--space-1);
+}
+
+.link {
+    @include text-secondary;
+    text-align: center;
+    margin-top: var(--space-2);
+    padding: var(--space-2);
+    border-radius: var(--radius-sm);
+    transition: background var(--transition-fast);
+
+    &:hover {
+        background: var(--color-hover);
+    }
+}
+
+.linkButton {
+    @include reset-button;
+    color: var(--color-accent);
+    font-size: var(--font-size-sm);
+    padding: var(--space-2);
+    margin-top: var(--space-3);
+}
+
+.error {
+    @include text-caption;
+    color: var(--color-danger);
+    margin: 0;
+    padding: var(--space-2) var(--space-3);
+    background: var(--color-danger-bg);
+    border-radius: var(--radius-sm);
+}
+
+.success {
+    text-align: center;
+    padding: var(--space-5) 0;
+}
+
+.successTitle {
+    @include text-subtitle;
+    color: var(--color-accent);
+    margin: 0 0 var(--space-3);
+}
+
+.successText {
+    font-size: var(--font-size-sm);
+    line-height: var(--line-height-relaxed);
+    color: var(--color-text-secondary);
+    margin: 0;
+
+    b {
+        color: var(--color-text-primary);
+        font-weight: var(--font-weight-medium);
+    }
+}
