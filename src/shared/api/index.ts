@@ -1,0 +1,1 @@
+export {createBrowserClient, updateSession} from './supabase';

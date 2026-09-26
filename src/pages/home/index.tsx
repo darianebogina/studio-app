@@ -1,14 +1,12 @@
-import { createServerClient } from '@/shared/api/server';
 import { redirect } from 'next/navigation';
+import { getUserRole } from '@/shared/lib/utils';
 
 export const HomePage = async () => {
-  const supabase = await createServerClient();
-  const { data: { user } } = await supabase.auth.getUser();
+    const user = await getUserRole();
 
-  if (!user) {
-    redirect('/login');
-  }
+    if (!user) {
+        redirect('/login');
+    }
 
-  return <div>Logged in as {user.email}</div>;
+    redirect(user.role === 'teacher' ? '/teacher' : '/home');
 };
-

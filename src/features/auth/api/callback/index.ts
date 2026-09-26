@@ -1,8 +1,8 @@
-import { NextResponse, type NextRequest } from 'next/server';
-import { createServerClient } from '@/shared/api/server';
+import {NextResponse, type NextRequest} from 'next/server';
+import {createClient as createServerClient} from '@/shared/api/supabase/server';
 
 export const GET = async (request: NextRequest) => {
-    const { searchParams, origin } = request.nextUrl;
+    const {searchParams, origin} = request.nextUrl;
     const code = searchParams.get('code');
     const next = searchParams.get('next') ?? '/';
 
@@ -11,7 +11,7 @@ export const GET = async (request: NextRequest) => {
     }
 
     const supabase = await createServerClient();
-    const { error } = await supabase.auth.exchangeCodeForSession(code);
+    const {error} = await supabase.auth.exchangeCodeForSession(code);
 
     if (error) {
         return NextResponse.redirect(`${origin}/login?error=invalid_code`);

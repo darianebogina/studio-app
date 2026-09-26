@@ -1,1 +1,0 @@
-export { updateSession } from './supabase/proxy';

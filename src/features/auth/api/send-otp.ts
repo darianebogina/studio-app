@@ -1,4 +1,4 @@
-import { createBrowserClient } from '@/shared/api/client';
+import { createBrowserClient } from '@/shared/api';
 
 type MagicLinkUserData = {
     first_name: string;

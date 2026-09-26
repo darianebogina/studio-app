@@ -1,0 +1,24 @@
+@use '@/shared/ui-kit/styles' as *;
+
+.container {
+    min-height: 100vh;
+    background: var(--color-bg);
+    color: var(--color-text-primary);
+    padding: var(--space-5);
+    font-family: inherit;
+}
+
+.title {
+    @include text-title;
+    margin: 0 0 var(--space-5);
+}
+
+.text {
+    @include text-body;
+    color: var(--color-text-secondary);
+    margin: var(--space-2) 0;
+}
+
+.logout {
+    margin-top: var(--space-10);
+}
