@@ -13,6 +13,7 @@
 
     // Цвета: акцент и статусы
     --color-accent: #00e676;
+    --color-accent-bg: rgba(0, 230, 118, 0.12);
     --color-on-accent: #000;
     --color-danger: #e24b4a;
     --color-danger-bg: rgba(226, 75, 74, 0.1);
@@ -47,6 +48,9 @@
     --space-8: 32px;
     --space-10: 40px;
 
+    // Размеры
+    --tab-bar-height: 80px;
+
     // Скругления
     --radius-sm: 8px;
     --radius-md: 12px;
@@ -58,4 +62,7 @@
     // Состояния
     --opacity-disabled: 0.5;
     --transition-fast: 0.15s ease;
+
+    // Слои
+    --z-index-tab-bar: 100;
 }

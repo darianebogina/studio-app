@@ -18,7 +18,9 @@ app/                  # только роутинг Next.js: page.tsx, layout.ts
 src/
   app/styles/         # глобальные стили
   pages/<page>/       # страницы
+  widgets/<widget>/   # самостоятельные блоки UI из фич и сущностей
   features/<feature>/ # фичи: api/, lib/, ui/
+  entities/<entity>/  # бизнес-сущности: api/, lib/, model/
   shared/             # api/, lib/, types/, ui-kit/
 proxy.ts              # proxy (бывший middleware) Next.js
 ```
@@ -28,9 +30,10 @@ proxy.ts              # proxy (бывший middleware) Next.js
   export { LoginPage as default } from '@/pages/login';
   export { authCallbackHandler as GET } from '@/features/auth/server';
   ```
-- Слои импортируют только нижележащие слои: `pages → features → shared`.
-- Каждый слайс и сегмент отдаёт наружу публичный API через `index.ts`. Снаружи импортируй только из него (`@/features/auth`, `@/shared/api`, `@/shared/types`), не из внутренних файлов.
-- Серверный публичный API фичи лежит в отдельном `server.ts` (`@/features/auth/server`), чтобы серверный код не попадал в клиентский бандл.
+- Слои импортируют только нижележащие слои: `pages → widgets → features → entities → shared`.
+- Каждый слайс и сегмент отдаёт наружу публичный API через `index.ts`. Снаружи импортируй только из него (`@/features/auth`, `@/entities/subscription`, `@/shared/api`, `@/shared/types`), не из внутренних файлов.
+- Серверный публичный API слайса (всё, что тянет `next/headers` или серверный Supabase-клиент) лежит в отдельном `server.ts` (`@/features/auth/server`, `@/entities/subscription/server`), чтобы серверный код не попадал в клиентский бандл. В `index.ts` такой код не экспортируется.
+- Типы и константы сущности лежат в `entities/<entity>/model/types.ts`.
 - Структуру папок определяет автор проекта. Повторяй раскладку соседних слайсов и не реорганизуй существующую без просьбы.
 - Части, которые нужны только одной странице, лежат рядом с ней: `src/pages/login/login-form/`.
 
@@ -69,14 +72,14 @@ proxy.ts              # proxy (бывший middleware) Next.js
 
 - **Только стрелочные функции.** Ключевое слово `function` не используется нигде: ни в компонентах, ни в хендлерах, ни в методах объектов.
   ```ts
-  export const getAuthErrorMessage = (message: string, fallback: string) => { ... };
-  getAll: () => request.cookies.getAll(),
+  export const getAuthErrorMessage = (message: string, fallback: string) => {  };
+  getAll: () => request.cookies.getAll()
   ```
 - **Только именованные экспорты.** `export default` запрещён в `src/`. Исключение — файлы корневого `app/`, где этого требует Next: там пиши `export { X as default } from ...`. Единственное место с объявлением и `export default` — `app/layout.tsx`.
 - Если тело функции — одно выражение, пиши его без фигурных скобок и `return`:
   ```tsx
   export const LoginPage = () => (
-      <AuthLayout ...>
+      <AuthLayout>
           <LoginForm />
       </AuthLayout>
   );
@@ -127,10 +130,12 @@ proxy.ts              # proxy (бывший middleware) Next.js
 1. `react`
 2. `next/*`
 3. внешние пакеты (`@supabase/ssr`, `date-fns`, `lucide-react`, ...)
-4. `@/features/*`
-5. `@/shared/*`
-6. относительные (`./lib`, `./login-form`)
-7. стили (`import styles from './styles.module.scss'`) — последними
+4. `@/widgets/*`
+5. `@/features/*`
+6. `@/entities/*`
+7. `@/shared/*`
+8. относительные (`./lib`, `./login-form`)
+9. стили (`import styles from './styles.module.scss'`) — последними
 
 Внутри `src/` для кросс-слайсовых импортов используй алиас `@/*` (он указывает на `src/*`), для файлов своего слайса — относительные пути.
 
@@ -138,6 +143,7 @@ proxy.ts              # proxy (бывший middleware) Next.js
 
 - Используй CSS Modules: `styles.module.scss` рядом с компонентом, импорт `import styles from './styles.module.scss'`, классы вида `className={styles.form}`.
 - Имена классов пиши в camelCase: `.successTitle`, `.linkButton`.
+- Корневой элемент компонента получает класс по имени компонента в camelCase: `StudentTabBar` → `<nav className={styles.studentTabBar}>`, `LoginForm` → `.loginForm`.
 - Каждый модуль начинается с `@use '@/shared/ui-kit/styles' as *;`, чтобы подключить миксины.
 - Все значения берутся из токенов `src/shared/ui-kit/styles/tokens.scss`: `var(--color-*)`, `var(--space-*)`, `var(--font-size-*)`, `var(--radius-*)`, `var(--border-thin)`, `var(--transition-fast)`. Хардкод px и цветов не используй. Если нужного токена нет, добавь его в `tokens.scss`.
 - Для типографики используй миксины `text-display`, `text-title`, `text-subtitle`, `text-body`, `text-secondary`, `text-caption` вместо ручного набора `font-size` + `line-height`.

@@ -52,7 +52,7 @@ export const RegisterForm = () => {
     const isValid = data.email && data.firstName && data.lastName && data.phone;
 
     return (
-        <form onSubmit={handleSubmit} className={styles.form}>
+        <form onSubmit={handleSubmit} className={styles.registerForm}>
             <label className={styles.field}>
                 <span className={styles.label}>Email</span>
                 <input

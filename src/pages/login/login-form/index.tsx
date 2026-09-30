@@ -43,7 +43,7 @@ export const LoginForm = () => {
     const isLoading = status === 'loading';
 
     return (
-        <form onSubmit={handleSubmit} className={styles.form}>
+        <form onSubmit={handleSubmit} className={styles.loginForm}>
             <input
                 type="email"
                 placeholder="your@email.com"

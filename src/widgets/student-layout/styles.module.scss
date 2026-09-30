@@ -1,0 +1,12 @@
+@use '@/shared/ui-kit/styles' as *;
+
+.studentLayout {
+    min-height: 100vh;
+    background: var(--color-bg);
+    color: var(--color-text-primary);
+}
+
+// Отступ снизу, чтобы фиксированный таб-бар не перекрывал контент
+.content {
+    padding-bottom: calc(var(--tab-bar-height) + env(safe-area-inset-bottom, 0px));
+}

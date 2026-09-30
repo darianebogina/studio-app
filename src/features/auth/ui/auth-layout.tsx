@@ -9,7 +9,7 @@ type AuthLayoutProps = {
 };
 
 export const AuthLayout = ({ children, title, subtitle, showLogo }: AuthLayoutProps) => (
-    <main className={styles.container}>
+    <main className={styles.authLayout}>
         <div className={styles.card}>
             {showLogo && <div className={styles.logo}>💃</div>}
             <h1 className={styles.title}>{title}</h1>

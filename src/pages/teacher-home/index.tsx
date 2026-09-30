@@ -11,7 +11,7 @@ export const TeacherHomePage = async () => {
     }
 
     return (
-        <main className={styles.container}>
+        <main className={styles.teacherHomePage}>
             <h1 className={styles.title}>Кабинет преподавателя</h1>
 
             <p className={styles.text}>Привет, {user.first_name}!</p>

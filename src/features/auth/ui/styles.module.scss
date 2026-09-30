@@ -1,6 +1,6 @@
 @use '@/shared/ui-kit/styles' as *;
 
-.container {
+.authLayout {
     min-height: 100vh;
     display: flex;
     align-items: center;
@@ -31,7 +31,7 @@
     margin: 0 0 var(--space-6);
 }
 
-.success {
+.magicLinkSent {
     text-align: center;
     padding: var(--space-5) 0;
 }
