@@ -1,6 +1,6 @@
 import { redirect } from 'next/navigation';
 import { LogoutButton } from '@/features/auth';
-import { getUserRole } from '@/shared/lib';
+import { getUserRole } from '@/shared/api/server';
 import styles from './styles.module.scss';
 
 export const TeacherHomePage = async () => {

@@ -20,8 +20,8 @@ src/
   pages/<page>/       # страницы
   widgets/<widget>/   # самостоятельные блоки UI из фич и сущностей
   features/<feature>/ # фичи: api/, ui/, lib.ts
-  entities/<entity>/  # бизнес-сущности: api/, model/, lib.ts
-  shared/             # api/, types/, ui-kit/, lib.ts
+  entities/<entity>/  # бизнес-сущности: ui/, model/, lib.ts
+  shared/             # api/, lib/, types/, ui-kit/
 proxy.ts              # proxy (бывший middleware) Next.js
 ```
 
@@ -32,8 +32,9 @@ proxy.ts              # proxy (бывший middleware) Next.js
   ```
 - Слои импортируют только нижележащие слои: `pages → widgets → features → entities → shared`.
 - Каждый слайс и сегмент отдаёт наружу публичный API через `index.ts`. Снаружи импортируй только из него (`@/features/auth`, `@/entities/subscription`, `@/shared/api`, `@/shared/types`), не из внутренних файлов.
-- Серверный публичный API слайса (всё, что тянет `next/headers` или серверный Supabase-клиент) лежит в отдельном `server.ts` (`@/features/auth/server`, `@/entities/subscription/server`), чтобы серверный код не попадал в клиентский бандл. В `index.ts` такой код не экспортируется.
-- Типы и константы сущности лежат в `entities/<entity>/model/types.ts`.
+- Серверный публичный API слайса (всё, что тянет `next/headers` или серверный Supabase-клиент) лежит в отдельном `server.ts` (`@/features/auth/server`, `@/shared/api/server`), чтобы серверный код не попадал в клиентский бандл. В `index.ts` такой код не экспортируется.
+- Запросы за данными лежат плоско в `shared/api/`, по файлу на функцию: `shared/api/get-lessons-by-range.ts`. Папок `api/` в сущностях не заводи. Серверные запросы экспортируются из `shared/api/server.ts`, клиентские клиенты и хелперы — из `shared/api/index.ts`.
+- Типы строк БД (`Lesson`, `Booking`, `Subscription`, ...) лежат в `shared/types/<domain>.ts`, потому что ими пользуется `shared/api`. Константы сущности (подписи, маппинги) лежат в `entities/<entity>/model/types.ts`.
 - Структуру папок определяет автор проекта. Повторяй раскладку соседних слайсов и не реорганизуй существующую без просьбы.
 - Части, которые нужны только одной странице, лежат рядом с ней: `src/pages/login/login-form/`.
 - Папку `lib/` с отдельным файлом на каждую функцию заводи, только когда вспомогательных функций действительно много. Если их одна-две, все функции, типы и константы компонента или слайса пишутся в один `lib.ts` рядом: `entities/user/avatar/lib.ts` с `getInitials`, а не `entities/user/lib/get-initials.ts`.
@@ -162,3 +163,8 @@ proxy.ts              # proxy (бывший middleware) Next.js
 - Браузерный клиент — `createBrowserClient` из `@/shared/api`. Серверный — `createClient as createServerClient` из `@/shared/api/supabase/server`.
 - Ошибки Supabase возвращаются как `{ error }` и обрабатываются вызывающим кодом, исключения не бросаются.
 - Для типизированных запросов используй дженерик: `.single<UserProfile>()`.
+- Для списков используй `.overrideTypes<Lesson[], { merge: false }>()` (`.returns()` устарел) и возвращай `data ?? []`.
+
+## Даты
+
+- Работа с датами идёт через `date-fns`. Дни, недели и время занятий считаются по МСК, для этого есть хелперы из `@/shared/lib/date` (`getWeekDays`, `isSameDay`, `formatLessonTime`, ...). Сырой `format`/`isSameDay` из `date-fns` для дат занятий не используй: на сервере он посчитает в UTC.

@@ -21,6 +21,11 @@
     --color-warning: #ffc53d;
     --color-warning-bg: rgba(255, 197, 61, 0.1);
 
+    // Цвета: типы занятий
+    --color-lesson-group: #7f77dd;
+    --color-lesson-own-indiv: #ed93b1;
+    --color-lesson-cancelled: #555;
+
     // Шрифты
     --font-sans: var(--font-geist), system-ui, -apple-system, sans-serif;
 
@@ -66,11 +71,13 @@
 
     // Границы
     --border-width-thin: 0.5px;
+    --border-width-accent: 3px;
     --border-thin: var(--border-width-thin) solid var(--color-border);
     --border-dashed: var(--border-width-thin) dashed var(--color-border);
 
     // Состояния
     --opacity-disabled: 0.5;
+    --opacity-cancelled: 0.35;
     --transition-fast: 0.15s ease;
 
     // Слои

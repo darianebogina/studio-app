@@ -1,5 +1,5 @@
-import { createClient as createServerClient } from '@/shared/api/supabase/server';
-import type { Subscription } from '../model/types';
+import { createClient as createServerClient } from './supabase/server';
+import type { Subscription } from '@/shared/types';
 
 // Самый старый активный абонемент идёт первым — списания работают по FIFO
 export const getActiveSubscription = async (userId: string): Promise<Subscription | null> => {

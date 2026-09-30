@@ -1,8 +1,7 @@
 import { ProfileHeader } from '@/widgets/profile-header';
 import { SubscriptionBlock } from '@/widgets/subscription-block';
 import { LogoutButton } from '@/features/auth';
-import { getActiveSubscription } from '@/entities/subscription/server';
-import { getUserRole } from '@/shared/lib';
+import { getActiveSubscription, getUserRole } from '@/shared/api/server';
 import styles from './styles.module.scss';
 
 export const StudentHomePage = async () => {

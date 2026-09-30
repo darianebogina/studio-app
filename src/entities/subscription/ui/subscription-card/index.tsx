@@ -1,4 +1,5 @@
-import { PLAN_LABELS, type Subscription } from '../../model/types';
+import type { Subscription } from '@/shared/types';
+import { PLAN_LABELS } from '../../model/types';
 import styles from './styles.module.scss';
 
 type SubscriptionCardProps = {

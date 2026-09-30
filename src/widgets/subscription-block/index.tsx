@@ -1,7 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import { isSubscriptionOverMonth, PLAN_LABELS, SubscriptionCard, type Subscription } from '@/entities/subscription';
+import { isSubscriptionOverMonth, PLAN_LABELS, SubscriptionCard } from '@/entities/subscription';
+import type { Subscription } from '@/shared/types';
 import { Modal } from '@/shared/ui-kit';
 import styles from './styles.module.scss';
 

@@ -1,0 +1,93 @@
+@use '@/shared/ui-kit/styles' as *;
+
+.lessonCard {
+    @include reset-button;
+    width: 100%;
+    display: flex;
+    align-items: stretch;
+    gap: var(--space-3);
+    padding: var(--space-4);
+    border: var(--border-thin);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+    text-align: left;
+    transition: border-color var(--transition-fast);
+
+    &:hover {
+        border-color: var(--color-text-placeholder);
+    }
+
+    &:focus-visible {
+        outline: var(--border-width-thin) solid var(--color-accent);
+    }
+}
+
+.cancelled {
+    opacity: var(--opacity-cancelled);
+}
+
+.time {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+}
+
+.startTime {
+    @include text-subtitle;
+}
+
+.duration {
+    @include text-secondary;
+}
+
+.stripe {
+    flex-shrink: 0;
+    width: var(--border-width-accent);
+    border-radius: var(--radius-full);
+}
+
+.group {
+    background: var(--color-lesson-group);
+}
+
+.ownIndiv {
+    background: var(--color-lesson-own-indiv);
+}
+
+.muted {
+    background: var(--color-lesson-cancelled);
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-1);
+}
+
+.title {
+    @include text-subtitle;
+}
+
+.meta {
+    @include text-secondary;
+}
+
+.bookedBadge,
+.cancelledBadge {
+    @include text-caption;
+    margin-top: var(--space-1);
+    padding: var(--space-1) var(--space-2);
+    border-radius: var(--radius-sm);
+    font-weight: var(--font-weight-medium);
+}
+
+.bookedBadge {
+    background: var(--color-accent-bg);
+    color: var(--color-accent);
+}
+
+.cancelledBadge {
+    background: var(--color-danger-bg);
+    color: var(--color-danger);
+}
