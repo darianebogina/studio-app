@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, type FormEvent } from 'react';
+import { useState, type ChangeEvent, type FormEvent } from 'react';
 import Link from 'next/link';
 import { getAuthErrorMessage, MagicLinkSent, sendOtp } from '@/features/auth';
 import type { FormStatus } from '@/shared/types';
@@ -10,6 +10,8 @@ export const LoginForm = () => {
     const [email, setEmail] = useState('');
     const [status, setStatus] = useState<FormStatus>('idle');
     const [errorMessage, setErrorMessage] = useState('');
+
+    const handleEmailChange = (e: ChangeEvent<HTMLInputElement>) => setEmail(e.target.value);
 
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
@@ -48,7 +50,7 @@ export const LoginForm = () => {
                 type="email"
                 placeholder="your@email.com"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={handleEmailChange}
                 required
                 disabled={isLoading}
                 className={styles.input}

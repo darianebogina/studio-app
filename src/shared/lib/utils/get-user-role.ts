@@ -1,4 +1,4 @@
-import {createClient as createServerClient} from '@/shared/api/supabase/server';
+import { createClient as createServerClient } from '@/shared/api/supabase/server';
 import type { UserProfile } from '@/shared/types';
 
 export const getUserRole = async (): Promise<UserProfile | null> => {

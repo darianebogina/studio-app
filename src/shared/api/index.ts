@@ -1,1 +1,1 @@
-export {createBrowserClient, updateSession} from './supabase';
+export { createBrowserClient, updateSession } from './supabase';

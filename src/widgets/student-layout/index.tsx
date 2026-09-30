@@ -1,7 +1,5 @@
 import type { ReactNode } from 'react';
-
 import { StudentTabBar } from '@/widgets/student-tab-bar';
-
 import styles from './styles.module.scss';
 
 type StudentLayoutProps = {

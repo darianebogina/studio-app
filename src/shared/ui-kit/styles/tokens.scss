@@ -50,6 +50,7 @@
 
     // Размеры
     --tab-bar-height: 80px;
+    --auth-card-width: 380px;
 
     // Скругления
     --radius-sm: 8px;
@@ -57,7 +58,8 @@
     --radius-full: 9999px;
 
     // Границы
-    --border-thin: 0.5px solid var(--color-border);
+    --border-width-thin: 0.5px;
+    --border-thin: var(--border-width-thin) solid var(--color-border);
 
     // Состояния
     --opacity-disabled: 0.5;

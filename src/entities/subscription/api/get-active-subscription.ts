@@ -1,5 +1,4 @@
 import { createClient as createServerClient } from '@/shared/api/supabase/server';
-
 import type { Subscription } from '../model/types';
 
 // Самый старый активный абонемент идёт первым — списания работают по FIFO

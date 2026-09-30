@@ -11,9 +11,11 @@ type MagicLinkSentProps = {
 export const MagicLinkSent = ({ email, text, onReset, resetLabel }: MagicLinkSentProps) => (
     <div className={styles.magicLinkSent}>
         <p className={styles.successTitle}>Проверьте почту</p>
+
         <p className={styles.successText}>
             На <b>{email}</b> {text}
         </p>
+
         {onReset && (
             <button type="button" onClick={onReset} className={styles.linkButton}>
                 {resetLabel}

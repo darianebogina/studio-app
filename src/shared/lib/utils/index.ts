@@ -1,1 +1,1 @@
-export {getUserRole} from './get-user-role';
+export { getUserRole } from './get-user-role';

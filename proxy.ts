@@ -1,4 +1,4 @@
-import { type NextRequest } from 'next/server';
+import type { NextRequest } from 'next/server';
 import { updateSession } from '@/shared/api';
 
 export const proxy = (request: NextRequest) => updateSession(request);

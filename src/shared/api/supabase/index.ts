@@ -1,2 +1,2 @@
-export {createClient as createBrowserClient} from './client';
-export {updateSession} from './proxy';
+export { createClient as createBrowserClient } from './client';
+export { updateSession } from './proxy';

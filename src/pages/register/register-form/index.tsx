@@ -1,18 +1,18 @@
 'use client';
 
-import { useState, type FormEvent, type ChangeEvent } from 'react';
+import { useState, type ChangeEvent, type FormEvent } from 'react';
 import Link from 'next/link';
 import { getAuthErrorMessage, MagicLinkSent, sendOtp } from '@/features/auth';
 import type { FormStatus } from '@/shared/types';
+import { INITIAL_DATA, type RegisterFormData } from './lib';
 import styles from './styles.module.scss';
-import { INITIAL_DATA, type FormData } from './lib';
 
 export const RegisterForm = () => {
-    const [data, setData] = useState<FormData>(INITIAL_DATA);
+    const [data, setData] = useState<RegisterFormData>(INITIAL_DATA);
     const [status, setStatus] = useState<FormStatus>('idle');
     const [errorMessage, setErrorMessage] = useState('');
 
-    const updateField = (field: keyof FormData) => (e: ChangeEvent<HTMLInputElement>) =>
+    const updateField = (field: keyof RegisterFormData) => (e: ChangeEvent<HTMLInputElement>) =>
         setData((prev) => ({ ...prev, [field]: e.target.value }));
 
     const handleSubmit = async (e: FormEvent) => {
@@ -49,7 +49,7 @@ export const RegisterForm = () => {
     }
 
     const isLoading = status === 'loading';
-    const isValid = data.email && data.firstName && data.lastName && data.phone;
+    const isValid = Object.values(data).every(Boolean);
 
     return (
         <form onSubmit={handleSubmit} className={styles.registerForm}>
