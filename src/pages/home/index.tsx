@@ -1,5 +1,5 @@
 import { redirect } from 'next/navigation';
-import { getUserRole } from '@/shared/lib/utils';
+import { getUserRole } from '@/shared/lib';
 
 export const HomePage = async () => {
     const user = await getUserRole();

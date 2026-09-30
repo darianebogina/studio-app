@@ -1,23 +1,23 @@
-import { redirect } from 'next/navigation';
+import { ProfileHeader } from '@/widgets/profile-header';
+import { SubscriptionBlock } from '@/widgets/subscription-block';
 import { LogoutButton } from '@/features/auth';
-import { getUserRole } from '@/shared/lib/utils';
+import { getActiveSubscription } from '@/entities/subscription/server';
+import { getUserRole } from '@/shared/lib';
 import styles from './styles.module.scss';
 
 export const StudentHomePage = async () => {
     const user = await getUserRole();
 
-    if (!user) {
-        redirect('/login');
-    }
+    // proxy.ts уже редиректит неавторизованных на /login
+    if (!user) return null;
+
+    const subscription = await getActiveSubscription(user.id);
 
     return (
         <main className={styles.studentHomePage}>
-            <h1 className={styles.title}>Главная ученика</h1>
+            <ProfileHeader user={user} />
 
-            <p className={styles.text}>Привет, {user.first_name}!</p>
-            <p className={styles.text}>Роль: {user.role}</p>
-            <p className={styles.text}>Email: {user.email}</p>
-            <p className={styles.text}>Телефон: {user.phone ?? '—'}</p>
+            <SubscriptionBlock subscription={subscription} />
 
             <div className={styles.logout}>
                 <LogoutButton />

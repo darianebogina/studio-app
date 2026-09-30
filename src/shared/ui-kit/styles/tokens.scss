@@ -4,6 +4,7 @@
     --color-surface: #1a1a1a;
     --color-border: #333;
     --color-hover: rgba(255, 255, 255, 0.04);
+    --color-overlay: rgba(0, 0, 0, 0.7);
 
     // Цвета: текст
     --color-text-primary: #fff;
@@ -17,6 +18,8 @@
     --color-on-accent: #000;
     --color-danger: #e24b4a;
     --color-danger-bg: rgba(226, 75, 74, 0.1);
+    --color-warning: #ffc53d;
+    --color-warning-bg: rgba(255, 197, 61, 0.1);
 
     // Шрифты
     --font-sans: var(--font-geist), system-ui, -apple-system, sans-serif;
@@ -51,6 +54,10 @@
     // Размеры
     --tab-bar-height: 80px;
     --auth-card-width: 380px;
+    --modal-width: 400px;
+    --avatar-size-sm: 32px;
+    --avatar-size-md: 48px;
+    --avatar-size-lg: 64px;
 
     // Скругления
     --radius-sm: 8px;
@@ -60,6 +67,7 @@
     // Границы
     --border-width-thin: 0.5px;
     --border-thin: var(--border-width-thin) solid var(--color-border);
+    --border-dashed: var(--border-width-thin) dashed var(--color-border);
 
     // Состояния
     --opacity-disabled: 0.5;

@@ -1,0 +1,31 @@
+@use '@/shared/ui-kit/styles' as *;
+
+.avatar {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-full);
+    background: var(--color-border);
+    color: var(--color-text-primary);
+    font-weight: var(--font-weight-medium);
+    user-select: none;
+}
+
+.sm {
+    @include text-caption;
+    width: var(--avatar-size-sm);
+    height: var(--avatar-size-sm);
+}
+
+.md {
+    @include text-body;
+    width: var(--avatar-size-md);
+    height: var(--avatar-size-md);
+}
+
+.lg {
+    @include text-subtitle;
+    width: var(--avatar-size-lg);
+    height: var(--avatar-size-lg);
+}

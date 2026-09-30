@@ -19,9 +19,9 @@ src/
   app/styles/         # глобальные стили
   pages/<page>/       # страницы
   widgets/<widget>/   # самостоятельные блоки UI из фич и сущностей
-  features/<feature>/ # фичи: api/, lib/, ui/
-  entities/<entity>/  # бизнес-сущности: api/, lib/, model/
-  shared/             # api/, lib/, types/, ui-kit/
+  features/<feature>/ # фичи: api/, ui/, lib.ts
+  entities/<entity>/  # бизнес-сущности: api/, model/, lib.ts
+  shared/             # api/, types/, ui-kit/, lib.ts
 proxy.ts              # proxy (бывший middleware) Next.js
 ```
 
@@ -36,6 +36,7 @@ proxy.ts              # proxy (бывший middleware) Next.js
 - Типы и константы сущности лежат в `entities/<entity>/model/types.ts`.
 - Структуру папок определяет автор проекта. Повторяй раскладку соседних слайсов и не реорганизуй существующую без просьбы.
 - Части, которые нужны только одной странице, лежат рядом с ней: `src/pages/login/login-form/`.
+- Папку `lib/` с отдельным файлом на каждую функцию заводи, только когда вспомогательных функций действительно много. Если их одна-две, все функции, типы и константы компонента или слайса пишутся в один `lib.ts` рядом: `entities/user/avatar/lib.ts` с `getInitials`, а не `entities/user/lib/get-initials.ts`.
 
 ## Файлы и именование
 
@@ -44,7 +45,7 @@ proxy.ts              # proxy (бывший middleware) Next.js
 | Файлы и папки | kebab-case | `get-auth-error-message.ts`, `magic-link-sent.tsx` |
 | Компонент или модуль в своей папке | `index.tsx` / `index.ts` | `src/pages/login/index.tsx` |
 | Стили компонента | `styles.module.scss` рядом | `login-form/styles.module.scss` |
-| Локальные типы и константы компонента | `lib.ts` рядом | `register-form/lib.ts` |
+| Локальные функции, типы и константы компонента | один `lib.ts` рядом (не папка `lib/`) | `register-form/lib.ts`, `avatar/lib.ts` |
 | Компоненты | PascalCase | `LoginForm`, `AuthLayout` |
 | Функции и переменные | camelCase | `sendOtp`, `updateSession` |
 | Константы-значения | UPPER_SNAKE_CASE | `INITIAL_DATA` |

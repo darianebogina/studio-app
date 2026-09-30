@@ -1,0 +1,47 @@
+@use '@/shared/ui-kit/styles' as *;
+
+.subscriptionCard {
+    @include reset-button;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    padding: var(--space-5);
+    border: var(--border-thin);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+    text-align: left;
+    transition: border-color var(--transition-fast);
+
+    &:hover {
+        border-color: var(--color-text-placeholder);
+    }
+
+    &:focus-visible {
+        outline: var(--border-width-thin) solid var(--color-accent);
+    }
+}
+
+.plan {
+    @include text-subtitle;
+}
+
+.counters {
+    display: flex;
+    gap: var(--space-6);
+}
+
+.counter {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+}
+
+.counterValue {
+    @include text-title;
+    color: var(--color-accent);
+}
+
+.counterLabel {
+    @include text-secondary;
+}
