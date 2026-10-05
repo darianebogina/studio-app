@@ -1,12 +1,7 @@
 import { formatLessonTime } from '@/shared/lib/date';
 import type { Lesson } from '@/shared/types';
-import {
-    getLessonAccent,
-    LESSON_META_LABELS,
-    LESSON_TITLES,
-    OWN_INDIV_META_LABEL,
-    type LessonCardVariant,
-} from './lib';
+import { LESSON_META_LABELS, LESSON_TITLES } from '../../model/types';
+import { getLessonAccent, OWN_INDIV_META_LABEL, type LessonCardVariant } from './lib';
 import styles from './styles.module.scss';
 
 type LessonCardProps = {

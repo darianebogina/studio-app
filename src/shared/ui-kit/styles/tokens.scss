@@ -4,7 +4,7 @@
     --color-surface: #1a1a1a;
     --color-border: #333;
     --color-hover: rgba(255, 255, 255, 0.04);
-    --color-overlay: rgba(0, 0, 0, 0.7);
+    --color-overlay: rgba(0, 0, 0, 0.6);
 
     // Цвета: текст
     --color-text-primary: #fff;
@@ -23,7 +23,9 @@
 
     // Цвета: типы занятий
     --color-lesson-group: #7f77dd;
+    --color-lesson-group-bg: rgba(127, 119, 221, 0.15);
     --color-lesson-own-indiv: #ed93b1;
+    --color-lesson-own-indiv-bg: rgba(237, 147, 177, 0.15);
     --color-lesson-cancelled: #555;
 
     // Шрифты
@@ -78,7 +80,10 @@
     // Состояния
     --opacity-disabled: 0.5;
     --opacity-cancelled: 0.35;
+    --opacity-hover: 0.85;
     --transition-fast: 0.15s ease;
+    --transition-normal: 0.2s ease;
+    --blur-overlay: 4px;
 
     // Слои
     --z-index-tab-bar: 100;

@@ -1,0 +1,84 @@
+@use '@/shared/ui-kit/styles' as *;
+
+.badge {
+    @include text-caption;
+    align-self: flex-start;
+    padding: var(--space-1) var(--space-2);
+    border-radius: var(--radius-sm);
+    font-weight: var(--font-weight-medium);
+}
+
+.vogue {
+    background: var(--color-lesson-group-bg);
+    color: var(--color-lesson-group);
+}
+
+.individual {
+    background: var(--color-lesson-own-indiv-bg);
+    color: var(--color-lesson-own-indiv);
+}
+
+.details {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+}
+
+.date {
+    @include text-body;
+    font-weight: var(--font-weight-medium);
+}
+
+.time {
+    @include text-secondary;
+}
+
+.actions {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    margin-top: var(--space-2);
+}
+
+.bookButton,
+.cancelButton {
+    @include reset-button;
+    @include text-body;
+    width: 100%;
+    padding: var(--space-3);
+    border-radius: var(--radius-md);
+    font-weight: var(--font-weight-medium);
+    transition: opacity var(--transition-fast);
+
+    &:hover {
+        opacity: var(--opacity-hover);
+    }
+
+    &:focus-visible {
+        outline: var(--border-width-thin) solid var(--color-text-primary);
+        outline-offset: var(--space-1);
+    }
+}
+
+.bookButton {
+    background: var(--color-accent);
+    color: var(--color-on-accent);
+}
+
+.cancelButton {
+    border: var(--border-width-thin) solid var(--color-danger);
+    color: var(--color-danger);
+}
+
+.hint {
+    @include text-caption;
+    color: var(--color-text-muted);
+    text-align: center;
+}
+
+.cancelled {
+    @include text-body;
+    margin-top: var(--space-2);
+    color: var(--color-danger);
+    text-align: center;
+}

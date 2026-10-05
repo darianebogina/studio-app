@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { DayStrip } from '@/widgets/day-strip';
 import { LessonList } from '@/widgets/lesson-list';
+import { LessonModal } from '@/entities/lesson';
 import type { Lesson } from '@/shared/types';
 import styles from './styles.module.scss';
 
@@ -18,9 +19,15 @@ export const StudentCalendarView = ({
     currentUserId,
 }: StudentCalendarViewProps) => {
     const [selectedDate, setSelectedDate] = useState(() => new Date());
+    const [selectedLesson, setSelectedLesson] = useState<Lesson | null>(null);
 
-    // TODO(4.3): открывать дровер занятия
-    const handleSelectLesson = (lesson: Lesson) => console.log(lesson.id);
+    const handleCloseLesson = () => setSelectedLesson(null);
+
+    // TODO(5): настоящая запись и отмена
+    const handleBook = () => alert('Логика записи будет на шаге 5');
+    const handleCancel = () => alert('Логика отмены будет на шаге 5');
+
+    const isSelectedLessonBooked = selectedLesson ? bookedLessonIds.has(selectedLesson.id) : false;
 
     return (
         <main className={styles.studentCalendarView}>
@@ -31,7 +38,15 @@ export const StudentCalendarView = ({
                 bookedLessonIds={bookedLessonIds}
                 currentUserId={currentUserId}
                 selectedDate={selectedDate}
-                onSelectLesson={handleSelectLesson}
+                onSelectLesson={setSelectedLesson}
+            />
+
+            <LessonModal
+                lesson={selectedLesson}
+                isBooked={isSelectedLessonBooked}
+                onClose={handleCloseLesson}
+                onBook={handleBook}
+                onCancel={handleCancel}
             />
         </main>
     );

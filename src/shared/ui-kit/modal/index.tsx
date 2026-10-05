@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useId, useRef, type MouseEvent, type ReactNode } from 'react';
+import { useEffect, useId, useRef, type MouseEvent, type ReactNode, type SyntheticEvent } from 'react';
 import { X } from 'lucide-react';
 import { CLOSE_ICON_SIZE } from './lib';
 import styles from './styles.module.scss';
@@ -24,6 +24,13 @@ export const Modal = ({ isOpen, title, onClose, children }: ModalProps) => {
         if (!isOpen && dialog.open) dialog.close();
     }, [isOpen]);
 
+    // Escape закрывает <dialog> нативно, и событие close приходит не всегда: стейт родителя
+    // остаётся «открыт», и повторно модалка не откроется. Закрытием управляет только isOpen
+    const handleCancel = (event: SyntheticEvent<HTMLDialogElement>) => {
+        event.preventDefault();
+        onClose();
+    };
+
     // Контент лежит во внутреннем блоке, поэтому клик с target === <dialog> — это клик по подложке
     const handleClick = (event: MouseEvent<HTMLDialogElement>) => {
         if (event.target === event.currentTarget) onClose();
@@ -33,6 +40,7 @@ export const Modal = ({ isOpen, title, onClose, children }: ModalProps) => {
         <dialog
             ref={dialogRef}
             aria-labelledby={titleId}
+            onCancel={handleCancel}
             onClose={onClose}
             onClick={handleClick}
             className={styles.modal}

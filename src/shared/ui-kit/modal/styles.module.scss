@@ -3,15 +3,38 @@
 .modal {
     width: calc(100% - 2 * var(--space-5));
     max-width: var(--modal-width);
+    max-height: calc(100dvh - 2 * var(--space-5));
     margin: auto;
+    overflow-y: auto;
     border: var(--border-thin);
     border-radius: var(--radius-md);
     background: var(--color-surface);
     color: var(--color-text-primary);
 
+    &[open] {
+        animation: modal-in var(--transition-normal);
+    }
+
     &::backdrop {
         background: var(--color-overlay);
+        backdrop-filter: blur(var(--blur-overlay));
     }
+
+    &[open]::backdrop {
+        animation: backdrop-in var(--transition-normal);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        &[open],
+        &[open]::backdrop {
+            animation: none;
+        }
+    }
+}
+
+// Нативный <dialog> не блокирует скролл страницы под собой
+:global(html):has(.modal[open]) {
+    overflow: hidden;
 }
 
 .content {
@@ -40,5 +63,18 @@
 
     &:hover {
         color: var(--color-text-primary);
+    }
+}
+
+@keyframes modal-in {
+    from {
+        opacity: 0;
+        transform: scale(0.96);
+    }
+}
+
+@keyframes backdrop-in {
+    from {
+        opacity: 0;
     }
 }
