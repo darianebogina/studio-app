@@ -31,6 +31,7 @@ proxy.ts              # proxy (бывший middleware) Next.js
   export { authCallbackHandler as GET } from '@/features/auth/server';
   ```
 - Слои импортируют только нижележащие слои: `pages → widgets → features → entities → shared`.
+- Слайсы одного слоя друг друга не импортируют (`widgets/a` → `widgets/b` нельзя). Если блок нужен только одному слайсу, он лежит в его папке: `widgets/student-layout/student-tab-bar/`.
 - Каждый слайс и сегмент отдаёт наружу публичный API через `index.ts`. Снаружи импортируй только из него (`@/features/auth`, `@/entities/subscription`, `@/shared/api`, `@/shared/types`), не из внутренних файлов.
 - Серверный публичный API слайса (всё, что тянет `next/headers` или серверный Supabase-клиент) лежит в отдельном `server.ts` (`@/features/auth/server`, `@/shared/api/server`), чтобы серверный код не попадал в клиентский бандл. В `index.ts` такой код не экспортируется.
 - Запросы за данными лежат плоско в `shared/api/`, по файлу на функцию: `shared/api/get-lessons-by-range.ts`. Папок `api/` в сущностях не заводи. Серверные запросы экспортируются из `shared/api/server.ts`, клиентские клиенты и хелперы — из `shared/api/index.ts`.
