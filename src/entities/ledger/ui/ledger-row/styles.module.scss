@@ -1,0 +1,50 @@
+@use '@/shared/ui-kit/styles' as *;
+
+.ledgerRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    padding: var(--space-3) 0;
+    border-bottom: var(--border-width-thin) solid var(--color-divider);
+
+    &:last-child {
+        border-bottom: none;
+    }
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    min-width: 0;
+}
+
+.date {
+    @include text-caption;
+    color: var(--color-text-muted);
+}
+
+.note {
+    @include text-body;
+    color: var(--color-text-primary);
+}
+
+.delta {
+    @include text-body;
+    flex-shrink: 0;
+    font-weight: var(--font-weight-medium);
+    white-space: nowrap;
+}
+
+.plus {
+    color: var(--color-accent);
+}
+
+.minus {
+    color: var(--color-text-secondary);
+}
+
+.reset {
+    color: var(--color-danger);
+}

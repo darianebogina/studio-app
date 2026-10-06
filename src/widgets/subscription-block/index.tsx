@@ -1,16 +1,18 @@
 'use client';
 
 import { useState } from 'react';
+import { LedgerHistory } from '@/entities/ledger';
 import { isSubscriptionOverMonth, PLAN_LABELS, SubscriptionCard } from '@/entities/subscription';
-import type { Subscription } from '@/shared/types';
+import type { LedgerEntry, Subscription } from '@/shared/types';
 import { Modal } from '@/shared/ui-kit';
 import styles from './styles.module.scss';
 
 type SubscriptionBlockProps = {
     subscription: Subscription | null;
+    ledgerEntries: LedgerEntry[];
 };
 
-export const SubscriptionBlock = ({ subscription }: SubscriptionBlockProps) => {
+export const SubscriptionBlock = ({ subscription, ledgerEntries }: SubscriptionBlockProps) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const handleOpen = () => setIsModalOpen(true);
@@ -49,6 +51,8 @@ export const SubscriptionBlock = ({ subscription }: SubscriptionBlockProps) => {
                     <span className={styles.detailLabel}>Дата покупки</span>
                     <span className={styles.detailValue}>{purchasedDate}</span>
                 </div>
+
+                <LedgerHistory entries={ledgerEntries} />
             </Modal>
         </section>
     );

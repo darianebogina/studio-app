@@ -1,0 +1,39 @@
+@use '@/shared/ui-kit/styles' as *;
+
+.ledgerHistory {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+}
+
+.header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+}
+
+.title {
+    @include text-body;
+    margin: 0;
+    font-weight: var(--font-weight-medium);
+}
+
+.subtitle {
+    @include text-secondary;
+    margin: 0;
+}
+
+.list {
+    max-height: var(--ledger-history-max-height);
+    margin: 0;
+    padding: 0;
+    overflow-y: auto;
+    list-style: none;
+}
+
+.empty {
+    @include text-secondary;
+    margin: 0;
+    padding: var(--space-6) 0;
+    text-align: center;
+}

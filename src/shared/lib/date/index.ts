@@ -27,3 +27,5 @@ export const formatFullDate = (isoString: string) =>
 
 export const isSameDay = (left: Date | string, right: Date | string) =>
     isSameDate(toStudioTime(left), toStudioTime(right));
+
+export const formatShortDate = (isoString: string) => format(toStudioTime(isoString), 'dd.MM.yyyy');
