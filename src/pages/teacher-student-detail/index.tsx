@@ -44,6 +44,7 @@ export const TeacherStudentDetailPage = async ({ params }: TeacherStudentDetailP
 
             <StudentActions
                 userId={student.id}
+                userName={`${student.first_name} ${student.last_name}`}
                 hasActiveSubscription={subscription !== null}
             />
 

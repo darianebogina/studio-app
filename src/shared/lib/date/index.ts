@@ -32,3 +32,5 @@ export const formatLessonDate = (isoString: string) =>
     capitalize(format(toStudioTime(isoString), 'EEEEEE, d MMMM', { locale: ru }));
 
 export const formatShortDate = (isoString: string) => format(toStudioTime(isoString), 'dd.MM.yyyy');
+
+export const getTodayDate = () => format(toStudioTime(new Date()), 'yyyy-MM-dd');

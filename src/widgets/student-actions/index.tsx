@@ -1,17 +1,22 @@
 'use client';
 
+import { useState } from 'react';
 import { Minus, Plus } from 'lucide-react';
+import { PurchaseSubscriptionModal } from '@/features/purchase-subscription';
 import { ACTION_ICON_SIZE, NOT_IMPLEMENTED_MESSAGE } from './lib';
 import styles from './styles.module.scss';
 
 type StudentActionsProps = {
     userId: string;
+    userName: string;
     hasActiveSubscription: boolean;
 };
 
-// TODO: userId понадобится, когда заглушки заменят на server actions (шаги 6.4–6.6)
-export const StudentActions = ({ hasActiveSubscription }: StudentActionsProps) => {
-    const handleAddSubscription = () => window.alert(NOT_IMPLEMENTED_MESSAGE);
+export const StudentActions = ({ userId, userName, hasActiveSubscription }: StudentActionsProps) => {
+    const [isOpenPurchase, setIsOpenPurchase] = useState(false);
+
+    const handleOpenPurchase = () => setIsOpenPurchase(true);
+    const handleClosePurchase = () => setIsOpenPurchase(false);
     const handleDeductLesson = () => window.alert(NOT_IMPLEMENTED_MESSAGE);
     const handleResetSubscription = () => window.alert(NOT_IMPLEMENTED_MESSAGE);
 
@@ -20,7 +25,7 @@ export const StudentActions = ({ hasActiveSubscription }: StudentActionsProps) =
             <div className={styles.grid}>
                 <button
                     type="button"
-                    onClick={handleAddSubscription}
+                    onClick={handleOpenPurchase}
                     className={styles.secondary}
                 >
                     <Plus size={ACTION_ICON_SIZE} aria-hidden="true" />
@@ -48,6 +53,13 @@ export const StudentActions = ({ hasActiveSubscription }: StudentActionsProps) =
                     Аннулировать абонемент
                 </button>
             )}
+
+            <PurchaseSubscriptionModal
+                isOpen={isOpenPurchase}
+                onClose={handleClosePurchase}
+                userId={userId}
+                userName={userName}
+            />
         </section>
     );
 };
