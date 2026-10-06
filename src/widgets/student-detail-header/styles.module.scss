@@ -1,0 +1,32 @@
+@use '@/shared/ui-kit/styles' as *;
+
+.studentDetailHeader {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-2) var(--space-1) var(--space-5);
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    min-width: 0;
+}
+
+.name {
+    margin: 0;
+    color: var(--color-text-primary);
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-medium);
+    line-height: var(--line-height-tight);
+}
+
+.contacts {
+    @include text-caption;
+    margin: 0;
+    overflow: hidden;
+    color: var(--color-text-muted);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}

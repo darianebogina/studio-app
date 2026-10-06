@@ -1,0 +1,51 @@
+@use '@/shared/ui-kit/styles' as *;
+
+.studentActions {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-2);
+}
+
+.secondary,
+.danger {
+    @include reset-button;
+    @include text-body;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    width: 100%;
+    padding: var(--space-3);
+    border-radius: var(--radius-md);
+    font-weight: var(--font-weight-medium);
+    transition: background var(--transition-fast);
+
+    &:focus-visible {
+        outline: var(--border-width-thin) solid var(--color-text-primary);
+        outline-offset: var(--space-1);
+    }
+}
+
+.secondary {
+    border: var(--border-thin);
+    color: var(--color-text-secondary);
+
+    &:hover {
+        background: var(--color-hover);
+    }
+}
+
+.danger {
+    border: var(--border-width-thin) solid var(--color-danger);
+    color: var(--color-danger);
+
+    &:hover {
+        background: var(--color-danger-bg);
+    }
+}

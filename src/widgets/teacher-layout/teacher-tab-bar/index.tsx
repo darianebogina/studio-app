@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { ICON_SIZE, TABS } from './lib';
+import { ICON_SIZE, TABS, isTabActive } from './lib';
 import styles from './styles.module.scss';
 
 export const TeacherTabBar = () => {
@@ -11,7 +11,7 @@ export const TeacherTabBar = () => {
     return (
         <nav className={styles.teacherTabBar}>
             {TABS.map(({ href, label, icon: Icon }) => {
-                const isActive = pathname === href;
+                const isActive = isTabActive(pathname ?? '', href);
 
                 return (
                     <Link

@@ -1,0 +1,28 @@
+@use '@/shared/ui-kit/styles' as *;
+
+.studentHistory {
+    display: flex;
+    flex-direction: column;
+}
+
+.title {
+    margin: 0;
+    padding: var(--space-3) var(--space-1) var(--space-1);
+    color: var(--color-text-placeholder);
+    font-size: var(--font-size-2xs);
+    font-weight: var(--font-weight-regular);
+    line-height: var(--line-height-normal);
+}
+
+.list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.empty {
+    @include text-secondary;
+    margin: 0;
+    padding: var(--space-5);
+    text-align: center;
+}
