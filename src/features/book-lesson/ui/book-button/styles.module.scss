@@ -1,0 +1,35 @@
+@use '@/shared/ui-kit/styles' as *;
+
+.bookButton {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+}
+
+.button {
+    @include reset-button;
+    @include text-body;
+    @include disabled;
+    width: 100%;
+    padding: var(--space-3);
+    border-radius: var(--radius-md);
+    background: var(--color-accent);
+    color: var(--color-on-accent);
+    font-weight: var(--font-weight-medium);
+    transition: opacity var(--transition-fast);
+
+    &:hover:not(:disabled) {
+        opacity: var(--opacity-hover);
+    }
+
+    &:focus-visible {
+        outline: var(--border-width-thin) solid var(--color-text-primary);
+        outline-offset: var(--space-1);
+    }
+}
+
+.error {
+    @include text-caption;
+    color: var(--color-danger);
+    text-align: center;
+}

@@ -3,6 +3,8 @@
 import { useState } from 'react';
 import { DayStrip } from '@/widgets/day-strip';
 import { LessonList } from '@/widgets/lesson-list';
+import { BookButton } from '@/features/book-lesson';
+import { CancelButton } from '@/features/cancel-booking';
 import { LessonModal } from '@/entities/lesson';
 import type { Lesson } from '@/shared/types';
 import styles from './styles.module.scss';
@@ -23,11 +25,9 @@ export const StudentCalendarView = ({
 
     const handleCloseLesson = () => setSelectedLesson(null);
 
-    // TODO(5): настоящая запись и отмена
-    const handleBook = () => alert('Логика записи будет на шаге 5');
-    const handleCancel = () => alert('Логика отмены будет на шаге 5');
-
     const isSelectedLessonBooked = selectedLesson ? bookedLessonIds.has(selectedLesson.id) : false;
+
+    const LessonActionButton = isSelectedLessonBooked ? CancelButton : BookButton;
 
     return (
         <main className={styles.studentCalendarView}>
@@ -43,10 +43,10 @@ export const StudentCalendarView = ({
 
             <LessonModal
                 lesson={selectedLesson}
-                isBooked={isSelectedLessonBooked}
+                actions={selectedLesson && (
+                    <LessonActionButton lessonId={selectedLesson.id} onSuccess={handleCloseLesson} />
+                )}
                 onClose={handleCloseLesson}
-                onBook={handleBook}
-                onCancel={handleCancel}
             />
         </main>
     );

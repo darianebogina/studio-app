@@ -167,6 +167,14 @@ proxy.ts              # proxy (бывший middleware) Next.js
 - Для типизированных запросов используй дженерик: `.single<UserProfile>()`.
 - Для списков используй `.overrideTypes<Lesson[], { merge: false }>()` (`.returns()` устарел) и возвращай `data ?? []`.
 
+## Server Actions
+
+- Мутации пишутся как Server Actions в `features/<feature>/api/<action>.ts` с `'use server'` первой строкой файла: `features/book-lesson/api/book-lesson.ts`. Чтения, которые им нужны, берутся из `@/shared/api/server`.
+- Action сам проверяет пользователя (`supabase.auth.getUser()`) и не бросает исключения, а возвращает `{ ok: true } | { ok: false; error: '<code>' }`. Коды ошибок, их тексты (`get<Feature>ErrorMessage`) и константы фичи лежат в её `lib.ts`.
+- После мутации action вызывает `revalidatePath` для затронутых страниц. Текущая страница обновится в том же запросе, `router.refresh()` не нужен.
+- Клиентская кнопка вызывает action в `startTransition` из `useTransition`, а сетевую ошибку ловит через `.catch(() => ({ ok: false, error: 'unknown' }))`.
+- Сущность не может импортировать фичу, поэтому UI сущности получает кнопки фич слотом (`actions: ReactNode`), а выбирает их страница.
+
 ## Даты
 
 - Работа с датами идёт через `date-fns`. Дни, недели и время занятий считаются по МСК, для этого есть хелперы из `@/shared/lib/date` (`getWeekDays`, `isSameDay`, `formatLessonTime`, ...). Сырой `format`/`isSameDay` из `date-fns` для дат занятий не используй: на сервере он посчитает в UTC.

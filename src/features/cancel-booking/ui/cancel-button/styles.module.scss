@@ -1,0 +1,35 @@
+@use '@/shared/ui-kit/styles' as *;
+
+.cancelButton {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+}
+
+.button {
+    @include reset-button;
+    @include text-body;
+    @include disabled;
+    width: 100%;
+    padding: var(--space-3);
+    border: var(--border-width-thin) solid var(--color-danger);
+    border-radius: var(--radius-md);
+    color: var(--color-danger);
+    font-weight: var(--font-weight-medium);
+    transition: background var(--transition-fast);
+
+    &:hover:not(:disabled) {
+        background: var(--color-danger-bg);
+    }
+
+    &:focus-visible {
+        outline: var(--border-width-thin) solid var(--color-text-primary);
+        outline-offset: var(--space-1);
+    }
+}
+
+.error {
+    @include text-caption;
+    color: var(--color-danger);
+    text-align: center;
+}

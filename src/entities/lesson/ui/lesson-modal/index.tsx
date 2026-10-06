@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react';
 import { formatFullDate, formatLessonTime } from '@/shared/lib/date';
 import type { Lesson } from '@/shared/types';
 import { Modal } from '@/shared/ui-kit';
@@ -5,21 +6,14 @@ import { LESSON_META_LABELS, LESSON_TITLES } from '../../model/types';
 import { DEDUCTION_HINTS, formatDuration } from './lib';
 import styles from './styles.module.scss';
 
+// Кнопки записи и отмены живут в фичах, которые сущность импортировать не может, поэтому приходят слотом
 type LessonModalProps = {
     lesson: Lesson | null;
-    isBooked: boolean;
+    actions: ReactNode;
     onClose: () => void;
-    onBook?: () => void;
-    onCancel?: () => void;
 };
 
-export const LessonModal = ({
-    lesson,
-    isBooked,
-    onClose,
-    onBook,
-    onCancel,
-}: LessonModalProps) => {
+export const LessonModal = ({ lesson, actions, onClose }: LessonModalProps) => {
     if (!lesson) return null;
 
     const { type, starts_at: startsAt, duration_min: durationMin, status } = lesson;
@@ -44,23 +38,7 @@ export const LessonModal = ({
 
             {!isCancelled && (
                 <div className={styles.actions}>
-                    {isBooked ? (
-                        <button
-                            type="button"
-                            onClick={onCancel}
-                            className={styles.cancelButton}
-                        >
-                            Отменить запись
-                        </button>
-                    ) : (
-                        <button
-                            type="button"
-                            onClick={onBook}
-                            className={styles.bookButton}
-                        >
-                            Записаться
-                        </button>
-                    )}
+                    {actions}
 
                     <p className={styles.hint}>{DEDUCTION_HINTS[type]}</p>
                 </div>
