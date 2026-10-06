@@ -1,0 +1,46 @@
+@use '@/shared/ui-kit/styles' as *;
+
+.teacherTabBar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: var(--z-index-tab-bar);
+    display: flex;
+    gap: var(--space-2);
+    padding: var(--space-2) var(--space-3) calc(var(--space-2) + env(safe-area-inset-bottom, 0px));
+    background: var(--color-bg);
+    border-top: var(--border-thin);
+}
+
+.tab {
+    @include text-caption;
+
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-1);
+    padding: var(--space-3) 0;
+    border-radius: var(--radius-md);
+    color: var(--color-text-muted);
+    text-decoration: none;
+    transition: background var(--transition-fast), color var(--transition-fast);
+
+    &:hover {
+        color: var(--color-text-secondary);
+    }
+}
+
+.active {
+    background: var(--color-accent-bg);
+    color: var(--color-accent);
+
+    &:hover {
+        color: var(--color-accent);
+    }
+}
+
+.label {
+    font-weight: var(--font-weight-medium);
+}
