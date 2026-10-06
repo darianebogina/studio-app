@@ -2,6 +2,7 @@
     // Цвета: фон и поверхности
     --color-bg: #000;
     --color-surface: #1a1a1a;
+    --color-surface-raised: #2a2a2a;
     --color-border: #333;
     --color-divider: #262626;
     --color-hover: rgba(255, 255, 255, 0.04);
@@ -33,6 +34,7 @@
     --font-sans: var(--font-geist), system-ui, -apple-system, sans-serif;
 
     // Размеры шрифта
+    --font-size-2xs: 11px;
     --font-size-xs: 12px;
     --font-size-sm: 13px;
     --font-size-md: 14px;
@@ -69,6 +71,7 @@
     --avatar-size-lg: 64px;
 
     // Скругления
+    --radius-xs: 6px;
     --radius-sm: 8px;
     --radius-md: 12px;
     --radius-full: 9999px;

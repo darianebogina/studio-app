@@ -6,11 +6,5 @@
 
 .title {
     @include text-title;
-    margin: 0 0 var(--space-2);
-}
-
-.text {
-    @include text-body;
-    margin: 0;
-    color: var(--color-text-secondary);
+    margin: 0 0 var(--space-4);
 }

@@ -1,3 +1,5 @@
+import type { Subscription } from './subscription';
+
 export type UserRole = 'student' | 'teacher';
 
 export type UserProfile = {
@@ -8,4 +10,9 @@ export type UserProfile = {
     last_name: string;
     role: UserRole;
     created_at: string;
+};
+
+export type StudentWithSubscription = {
+    user: UserProfile;
+    subscription: Subscription | null;
 };

@@ -1,9 +1,15 @@
+import { StudentsList } from '@/widgets/students-list';
+import { getAllStudents } from '@/shared/api/server';
 import styles from './styles.module.scss';
 
-export const TeacherStudentsPage = () => (
-    <main className={styles.teacherStudentsPage}>
-        <h1 className={styles.title}>Ученики</h1>
+export const TeacherStudentsPage = async () => {
+    const students = await getAllStudents();
 
-        <p className={styles.text}>В разработке</p>
-    </main>
-);
+    return (
+        <main className={styles.teacherStudentsPage}>
+            <h1 className={styles.title}>Ученики</h1>
+
+            <StudentsList students={students} />
+        </main>
+    );
+};
