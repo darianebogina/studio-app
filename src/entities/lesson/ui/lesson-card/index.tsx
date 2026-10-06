@@ -1,4 +1,4 @@
-import { formatLessonTime } from '@/shared/lib/date';
+import { formatLessonDate, formatLessonTime } from '@/shared/lib/date';
 import type { Lesson } from '@/shared/types';
 import { LESSON_META_LABELS, LESSON_TITLES } from '../../model/types';
 import { getLessonAccent, OWN_INDIV_META_LABEL, type LessonCardVariant } from './lib';
@@ -7,6 +7,7 @@ import styles from './styles.module.scss';
 type LessonCardProps = {
     lesson: Lesson;
     isBooked?: boolean;
+    showDate?: boolean;
     onClick?: () => void;
     variant?: LessonCardVariant;
 };
@@ -14,6 +15,7 @@ type LessonCardProps = {
 export const LessonCard = ({
     lesson,
     isBooked = false,
+    showDate = false,
     onClick,
     variant = 'default',
 }: LessonCardProps) => {
@@ -21,7 +23,8 @@ export const LessonCard = ({
 
     const isCancelled = status === 'cancelled';
     const accent = getLessonAccent({ status, variant });
-    const metaLabel = variant === 'own-indiv' ? OWN_INDIV_META_LABEL : LESSON_META_LABELS[type];
+    const typeLabel = variant === 'own-indiv' ? OWN_INDIV_META_LABEL : LESSON_META_LABELS[type];
+    const metaLabel = showDate ? `${formatLessonDate(startsAt)} · ${typeLabel}` : typeLabel;
 
     return (
         <button

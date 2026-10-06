@@ -1,3 +1,5 @@
+import type { Lesson } from './lesson';
+
 export type BookingStatus = 'booked' | 'attended' | 'missed' | 'cancelled';
 
 export type Booking = {
@@ -7,4 +9,8 @@ export type Booking = {
     status: BookingStatus;
     booked_at: string;
     attended_at: string | null;
+};
+
+export type BookingWithLesson = Booking & {
+    lesson: Lesson;
 };

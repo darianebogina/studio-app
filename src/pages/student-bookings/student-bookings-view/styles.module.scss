@@ -1,0 +1,8 @@
+@use '@/shared/ui-kit/styles' as *;
+
+.studentBookingsView {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+    padding: var(--space-5);
+}

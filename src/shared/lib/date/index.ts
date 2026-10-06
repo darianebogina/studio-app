@@ -28,4 +28,7 @@ export const formatFullDate = (isoString: string) =>
 export const isSameDay = (left: Date | string, right: Date | string) =>
     isSameDate(toStudioTime(left), toStudioTime(right));
 
+export const formatLessonDate = (isoString: string) =>
+    capitalize(format(toStudioTime(isoString), 'EEEEEE, d MMMM', { locale: ru }));
+
 export const formatShortDate = (isoString: string) => format(toStudioTime(isoString), 'dd.MM.yyyy');

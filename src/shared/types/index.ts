@@ -1,6 +1,6 @@
 export type { FormStatus } from './form';
 export type { UserRole, UserProfile } from './user';
-export type { Booking, BookingStatus } from './booking';
+export type { Booking, BookingStatus, BookingWithLesson } from './booking';
 export type { LedgerEntry, LedgerEventType, LessonKind } from './ledger';
 export type { Lesson, LessonStatus, LessonType } from './lesson';
 export type { Subscription, SubscriptionPlan } from './subscription';
