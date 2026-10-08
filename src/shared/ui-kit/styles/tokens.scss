@@ -72,6 +72,7 @@
     --avatar-size-sm: 32px;
     --avatar-size-md: 48px;
     --avatar-size-lg: 64px;
+    --fab-size: 52px;
 
     // Скругления
     --radius-xs: 6px;
@@ -93,6 +94,10 @@
     --transition-normal: 0.2s ease;
     --blur-overlay: 4px;
 
+    // Тени
+    --shadow-fab: 0 4px 16px rgba(0, 230, 118, 0.3);
+
     // Слои
     --z-index-tab-bar: 100;
+    --z-index-fab: 101;
 }

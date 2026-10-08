@@ -11,3 +11,9 @@ export type Lesson = {
     external_student_name: string | null;
     created_at: string;
 };
+
+export type LessonWithBookings = {
+    lesson: Lesson;
+    bookedCount: number;
+    studentName: string | null;
+};

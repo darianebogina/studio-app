@@ -1,0 +1,10 @@
+@use '@/shared/ui-kit/styles' as *;
+
+// Снизу запас под FAB, чтобы он не закрывал последнюю карточку
+.teacherTodayView {
+    padding: var(--space-5) var(--space-5) calc(var(--fab-size) + var(--space-8));
+}
+
+.profile {
+    margin-bottom: var(--space-5);
+}

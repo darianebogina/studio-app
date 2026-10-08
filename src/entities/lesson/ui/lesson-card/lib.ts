@@ -1,4 +1,6 @@
-import type { LessonStatus } from '@/shared/types';
+import { pluralize } from '@/shared/lib/plural';
+import type { LessonStatus, LessonType } from '@/shared/types';
+import { LESSON_META_LABELS } from '../../model/types';
 
 export type LessonCardVariant = 'default' | 'own-indiv';
 
@@ -15,4 +17,25 @@ export const getLessonAccent = ({ status, variant }: GetLessonAccentParams): Les
     if (status === 'cancelled') return 'muted';
 
     return variant === 'own-indiv' ? 'ownIndiv' : 'group';
+};
+
+type GetMetaLabelParams = {
+    type: LessonType;
+    variant: LessonCardVariant;
+    bookedCount?: number;
+    studentName?: string | null;
+};
+
+export const getMetaLabel = ({ type, variant, bookedCount, studentName }: GetMetaLabelParams) => {
+    if (variant === 'own-indiv') return OWN_INDIV_META_LABEL;
+
+    if (type === 'individual') {
+        return studentName ? `${LESSON_META_LABELS[type]} · ${studentName}` : LESSON_META_LABELS[type];
+    }
+
+    if (bookedCount !== undefined) {
+        return `${bookedCount} ${pluralize(bookedCount, ['записан', 'записаны', 'записано'])}`;
+    }
+
+    return LESSON_META_LABELS[type];
 };

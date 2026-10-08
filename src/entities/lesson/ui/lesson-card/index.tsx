@@ -1,7 +1,7 @@
 import { formatLessonDate, formatLessonTime } from '@/shared/lib/date';
 import type { Lesson } from '@/shared/types';
-import { LESSON_META_LABELS, LESSON_TITLES } from '../../model/types';
-import { getLessonAccent, OWN_INDIV_META_LABEL, type LessonCardVariant } from './lib';
+import { LESSON_TITLES } from '../../model/types';
+import { getLessonAccent, getMetaLabel, type LessonCardVariant } from './lib';
 import styles from './styles.module.scss';
 
 type LessonCardProps = {
@@ -10,6 +10,8 @@ type LessonCardProps = {
     showDate?: boolean;
     onClick?: () => void;
     variant?: LessonCardVariant;
+    bookedCount?: number;
+    studentName?: string | null;
 };
 
 export const LessonCard = ({
@@ -18,12 +20,14 @@ export const LessonCard = ({
     showDate = false,
     onClick,
     variant = 'default',
+    bookedCount,
+    studentName,
 }: LessonCardProps) => {
     const { type, starts_at: startsAt, duration_min: durationMin, status } = lesson;
 
     const isCancelled = status === 'cancelled';
     const accent = getLessonAccent({ status, variant });
-    const typeLabel = variant === 'own-indiv' ? OWN_INDIV_META_LABEL : LESSON_META_LABELS[type];
+    const typeLabel = getMetaLabel({ type, variant, bookedCount, studentName });
     const metaLabel = showDate ? `${formatLessonDate(startsAt)} · ${typeLabel}` : typeLabel;
 
     return (

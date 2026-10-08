@@ -1,1 +1,1 @@
-export { TeacherHomePage as default } from '@/pages/teacher-home';
+export { TeacherTodayPage as default } from '@/pages/teacher-today';

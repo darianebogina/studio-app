@@ -1,5 +1,5 @@
 import { TZDate } from '@date-fns/tz';
-import { addDays, format, isSameDay as isSameDate, startOfWeek } from 'date-fns';
+import { addDays, format, isSameDay as isSameDate, startOfDay, startOfWeek } from 'date-fns';
 import { ru } from 'date-fns/locale';
 
 const TIME_ZONE = 'Europe/Moscow';
@@ -34,3 +34,9 @@ export const formatLessonDate = (isoString: string) =>
 export const formatShortDate = (isoString: string) => format(toStudioTime(isoString), 'dd.MM.yyyy');
 
 export const getTodayDate = () => format(toStudioTime(new Date()), 'yyyy-MM-dd');
+
+export const getTodayRange = () => {
+    const dateFrom = startOfDay(toStudioTime(new Date()));
+
+    return { dateFrom, dateTo: addDays(dateFrom, 1) };
+};
