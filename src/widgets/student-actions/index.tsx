@@ -2,9 +2,10 @@
 
 import { useState } from 'react';
 import { Minus, Plus } from 'lucide-react';
+import { DeductLessonModal } from '@/features/deduct-lesson-manually';
 import { PurchaseSubscriptionModal } from '@/features/purchase-subscription';
 import { ResetSubscriptionButton } from '@/features/reset-subscription';
-import { ACTION_ICON_SIZE, NOT_IMPLEMENTED_MESSAGE } from './lib';
+import { ACTION_ICON_SIZE } from './lib';
 import styles from './styles.module.scss';
 
 type StudentActionsProps = {
@@ -15,10 +16,12 @@ type StudentActionsProps = {
 
 export const StudentActions = ({ userId, userName, hasActiveSubscription }: StudentActionsProps) => {
     const [isOpenPurchase, setIsOpenPurchase] = useState(false);
+    const [isOpenDeduct, setIsOpenDeduct] = useState(false);
 
     const handleOpenPurchase = () => setIsOpenPurchase(true);
     const handleClosePurchase = () => setIsOpenPurchase(false);
-    const handleDeductLesson = () => window.alert(NOT_IMPLEMENTED_MESSAGE);
+    const handleOpenDeduct = () => setIsOpenDeduct(true);
+    const handleCloseDeduct = () => setIsOpenDeduct(false);
 
     return (
         <section className={styles.studentActions}>
@@ -35,7 +38,7 @@ export const StudentActions = ({ userId, userName, hasActiveSubscription }: Stud
                 {hasActiveSubscription && (
                     <button
                         type="button"
-                        onClick={handleDeductLesson}
+                        onClick={handleOpenDeduct}
                         className={styles.secondary}
                     >
                         <Minus size={ACTION_ICON_SIZE} aria-hidden="true" />
@@ -54,6 +57,13 @@ export const StudentActions = ({ userId, userName, hasActiveSubscription }: Stud
             <PurchaseSubscriptionModal
                 isOpen={isOpenPurchase}
                 onClose={handleClosePurchase}
+                userId={userId}
+                userName={userName}
+            />
+
+            <DeductLessonModal
+                isOpen={isOpenDeduct}
+                onClose={handleCloseDeduct}
                 userId={userId}
                 userName={userName}
             />
