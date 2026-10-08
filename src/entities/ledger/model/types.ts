@@ -10,4 +10,4 @@ export const DEDUCTION_UNIT_LABELS: Record<LessonKind, string> = {
     individual: 'индив',
 };
 
-export const RESET_LABEL = 'сгорел';
+export const RESET_LABEL = 'аннулирован';

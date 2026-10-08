@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { Minus, Plus } from 'lucide-react';
 import { PurchaseSubscriptionModal } from '@/features/purchase-subscription';
+import { ResetSubscriptionButton } from '@/features/reset-subscription';
 import { ACTION_ICON_SIZE, NOT_IMPLEMENTED_MESSAGE } from './lib';
 import styles from './styles.module.scss';
 
@@ -18,7 +19,6 @@ export const StudentActions = ({ userId, userName, hasActiveSubscription }: Stud
     const handleOpenPurchase = () => setIsOpenPurchase(true);
     const handleClosePurchase = () => setIsOpenPurchase(false);
     const handleDeductLesson = () => window.alert(NOT_IMPLEMENTED_MESSAGE);
-    const handleResetSubscription = () => window.alert(NOT_IMPLEMENTED_MESSAGE);
 
     return (
         <section className={styles.studentActions}>
@@ -45,13 +45,10 @@ export const StudentActions = ({ userId, userName, hasActiveSubscription }: Stud
             </div>
 
             {hasActiveSubscription && (
-                <button
-                    type="button"
-                    onClick={handleResetSubscription}
-                    className={styles.danger}
-                >
-                    Аннулировать абонемент
-                </button>
+                <ResetSubscriptionButton
+                    userId={userId}
+                    disabled={!hasActiveSubscription}
+                />
             )}
 
             <PurchaseSubscriptionModal
