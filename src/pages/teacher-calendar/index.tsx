@@ -1,9 +1,14 @@
-import styles from './styles.module.scss';
+import { addDays } from 'date-fns';
+import { getLessonsByRangeWithBookings } from '@/shared/api/server';
+import { getWeekDays } from '@/shared/lib/date';
+import { TeacherCalendarView } from './teacher-calendar-view';
 
-export const TeacherCalendarPage = () => (
-    <main className={styles.teacherCalendarPage}>
-        <h1 className={styles.title}>Календарь</h1>
+export const TeacherCalendarPage = async () => {
+    const weekDays = getWeekDays(new Date());
+    const dateFrom = weekDays[0];
+    const dateTo = addDays(dateFrom, weekDays.length);
 
-        <p className={styles.text}>В разработке</p>
-    </main>
-);
+    const lessons = await getLessonsByRangeWithBookings({ dateFrom, dateTo });
+
+    return <TeacherCalendarView lessons={lessons} />;
+};
