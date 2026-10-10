@@ -1,10 +1,12 @@
 'use client';
 
+import { useState } from 'react';
 import { ProfileHeader } from '@/widgets/profile-header';
+import { TeacherLessonModal } from '@/widgets/teacher-lesson-modal';
 import { TeacherTodayFab } from '@/widgets/teacher-today-fab';
 import { TeacherTodayLessons } from '@/widgets/teacher-today-lessons';
 import { TodayStats } from '@/widgets/today-stats';
-import type { LessonWithBookings, UserProfile } from '@/shared/types';
+import type { Lesson, LessonWithBookings, UserProfile } from '@/shared/types';
 import styles from './styles.module.scss';
 
 type TeacherTodayViewProps = {
@@ -14,14 +16,16 @@ type TeacherTodayViewProps = {
     bookedCount: number;
 };
 
-// Заглушки: модалка занятия — шаг 6.9, создание занятия — шаг 6.10
+// Заглушка: создание занятия — шаг 6.10
 export const TeacherTodayView = ({
     user,
     lessons,
     lessonsCount,
     bookedCount,
 }: TeacherTodayViewProps) => {
-    const handleSelectLesson = () => alert('Модалка занятия будет реализована на шаге 6.9');
+    const [selectedLesson, setSelectedLesson] = useState<Lesson | null>(null);
+
+    const handleCloseLesson = () => setSelectedLesson(null);
     const handleCreateLesson = () => alert('Создание занятия будет реализовано на шаге 6.10');
 
     return (
@@ -32,9 +36,11 @@ export const TeacherTodayView = ({
 
             <TodayStats lessonsCount={lessonsCount} bookedCount={bookedCount} />
 
-            <TeacherTodayLessons lessons={lessons} onSelectLesson={handleSelectLesson} />
+            <TeacherTodayLessons lessons={lessons} onSelectLesson={setSelectedLesson} />
 
             <TeacherTodayFab onClick={handleCreateLesson} />
+
+            <TeacherLessonModal lesson={selectedLesson} onClose={handleCloseLesson} />
         </main>
     );
 };

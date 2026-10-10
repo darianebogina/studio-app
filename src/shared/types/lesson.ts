@@ -1,3 +1,5 @@
+import type { BookingWithStudent } from './booking';
+
 export type LessonType = 'vogue' | 'individual';
 export type LessonStatus = 'scheduled' | 'cancelled';
 
@@ -16,4 +18,9 @@ export type LessonWithBookings = {
     lesson: Lesson;
     bookedCount: number;
     studentName: string | null;
+};
+
+export type LessonWithStudents = {
+    lesson: Lesson;
+    bookings: BookingWithStudent[];
 };

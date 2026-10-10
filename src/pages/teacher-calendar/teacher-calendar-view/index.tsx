@@ -3,18 +3,19 @@
 import { useState } from 'react';
 import { DayStrip } from '@/widgets/day-strip';
 import { TeacherLessonList } from '@/widgets/teacher-lesson-list';
-import type { LessonWithBookings } from '@/shared/types';
+import { TeacherLessonModal } from '@/widgets/teacher-lesson-modal';
+import type { Lesson, LessonWithBookings } from '@/shared/types';
 import styles from './styles.module.scss';
 
 type TeacherCalendarViewProps = {
     lessons: LessonWithBookings[];
 };
 
-// Заглушка: модалка занятия — шаг 6.9
 export const TeacherCalendarView = ({ lessons }: TeacherCalendarViewProps) => {
     const [selectedDate, setSelectedDate] = useState(() => new Date());
+    const [selectedLesson, setSelectedLesson] = useState<Lesson | null>(null);
 
-    const handleSelectLesson = () => alert('Модалка занятия будет реализована на шаге 6.9');
+    const handleCloseLesson = () => setSelectedLesson(null);
 
     return (
         <main className={styles.teacherCalendarView}>
@@ -23,8 +24,10 @@ export const TeacherCalendarView = ({ lessons }: TeacherCalendarViewProps) => {
             <TeacherLessonList
                 lessons={lessons}
                 selectedDate={selectedDate}
-                onSelectLesson={handleSelectLesson}
+                onSelectLesson={setSelectedLesson}
             />
+
+            <TeacherLessonModal lesson={selectedLesson} onClose={handleCloseLesson} />
         </main>
     );
 };

@@ -1,0 +1,129 @@
+@use '@/shared/ui-kit/styles' as *;
+
+.lessonAttendance {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+}
+
+.status {
+    @include text-secondary;
+    padding: var(--space-4) 0;
+    text-align: center;
+}
+
+.section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+}
+
+.sectionTitle {
+    @include text-caption;
+    color: var(--color-text-muted);
+    font-weight: var(--font-weight-medium);
+}
+
+.empty {
+    @include text-secondary;
+}
+
+.students {
+    display: flex;
+    flex-direction: column;
+    border: var(--border-thin);
+    overflow: hidden;
+    border-radius: var(--radius-sm);
+    background: var(--color-surface-sunken);
+}
+
+.student {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    padding: var(--space-3);
+
+    transition: background var(--transition-fast), box-shadow var(--transition-fast);
+
+    & + & {
+        border-top: var(--border-width-thin) solid var(--color-divider);
+    }
+}
+
+// Несохранённое изменение: жёлтая кайма слева через тень, чтобы не сдвигать содержимое строки
+.studentChanged {
+    background: var(--color-warning-bg);
+    box-shadow: inset var(--border-width-accent) 0 0 var(--color-warning);
+}
+
+.studentLabel {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    min-width: 0;
+    cursor: pointer;
+
+    &:has(:disabled) {
+        cursor: default;
+    }
+}
+
+.checkbox {
+    flex-shrink: 0;
+    width: var(--space-4);
+    height: var(--space-4);
+    margin: 0;
+    accent-color: var(--color-accent);
+    cursor: inherit;
+}
+
+.name {
+    @include text-body;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.balance {
+    @include text-secondary;
+    flex-shrink: 0;
+}
+
+.balanceEmpty {
+    color: var(--color-danger);
+}
+
+.actions {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+}
+
+.save {
+    @include reset-button;
+    @include text-body;
+    @include disabled;
+    width: 100%;
+    padding: var(--space-3);
+    border-radius: var(--radius-md);
+    background: var(--color-accent);
+    color: var(--color-on-accent);
+    font-weight: var(--font-weight-medium);
+    transition: opacity var(--transition-fast);
+
+    &:hover:not(:disabled) {
+        opacity: var(--opacity-hover);
+    }
+
+    &:focus-visible {
+        outline: var(--border-width-thin) solid var(--color-text-primary);
+        outline-offset: var(--space-1);
+    }
+}
+
+.error {
+    @include text-caption;
+    color: var(--color-danger);
+    text-align: center;
+}

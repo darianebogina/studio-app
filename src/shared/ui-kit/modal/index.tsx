@@ -8,11 +8,12 @@ import styles from './styles.module.scss';
 type ModalProps = {
     isOpen: boolean;
     title: string;
+    titleAddon?: ReactNode;
     onClose: () => void;
     children: ReactNode;
 };
 
-export const Modal = ({ isOpen, title, onClose, children }: ModalProps) => {
+export const Modal = ({ isOpen, title, titleAddon, onClose, children }: ModalProps) => {
     const dialogRef = useRef<HTMLDialogElement>(null);
     const titleId = useId();
 
@@ -50,7 +51,10 @@ export const Modal = ({ isOpen, title, onClose, children }: ModalProps) => {
             {isOpen && (
                 <div className={styles.content}>
                     <div className={styles.header}>
-                        <h2 id={titleId} className={styles.title}>{title}</h2>
+                        <div className={styles.titleGroup}>
+                            <h2 id={titleId} className={styles.title}>{title}</h2>
+                            {titleAddon}
+                        </div>
 
                         <button
                             type="button"

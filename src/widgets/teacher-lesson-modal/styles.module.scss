@@ -1,0 +1,30 @@
+@use '@/shared/ui-kit/styles' as *;
+
+.badge {
+    @include text-caption;
+    padding: var(--space-1) var(--space-2);
+    border-radius: var(--radius-sm);
+    font-weight: var(--font-weight-medium);
+}
+
+.vogue {
+    background: var(--color-lesson-group-bg);
+    color: var(--color-lesson-group);
+}
+
+.individual {
+    background: var(--color-lesson-own-indiv-bg);
+    color: var(--color-lesson-own-indiv);
+}
+
+.meta {
+    @include text-secondary;
+    margin-top: calc(-1 * var(--space-2));
+}
+
+.cancelled {
+    @include text-subtitle;
+    margin: var(--space-4) 0;
+    color: var(--color-danger);
+    text-align: center;
+}

@@ -2,6 +2,7 @@ export { getActiveSubscription } from './get-active-subscription';
 export { getAllStudents } from './get-all-students';
 export { getLedgerEntries } from './get-ledger-entries';
 export { getLessonById } from './get-lesson-by-id';
+export { getLessonWithStudents } from './get-lesson-with-students';
 export { getLessonsByRange } from './get-lessons-by-range';
 export { getLessonsByRangeWithBookings } from './get-lessons-by-range-with-bookings';
 export { getStudentById } from './get-student-by-id';

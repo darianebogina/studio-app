@@ -1,4 +1,6 @@
 import type { Lesson } from './lesson';
+import type { Subscription } from './subscription';
+import type { UserProfile } from './user';
 
 export type BookingStatus = 'booked' | 'attended' | 'missed' | 'cancelled';
 
@@ -13,4 +15,10 @@ export type Booking = {
 
 export type BookingWithLesson = Booking & {
     lesson: Lesson;
+};
+
+export type BookingWithStudent = {
+    booking: Booking;
+    user: UserProfile;
+    activeSubscription: Subscription | null;
 };
