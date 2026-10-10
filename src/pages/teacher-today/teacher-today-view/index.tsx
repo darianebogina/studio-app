@@ -6,6 +6,7 @@ import { TeacherLessonModal } from '@/widgets/teacher-lesson-modal';
 import { TeacherTodayFab } from '@/widgets/teacher-today-fab';
 import { TeacherTodayLessons } from '@/widgets/teacher-today-lessons';
 import { TodayStats } from '@/widgets/today-stats';
+import { CreateLessonModal } from '@/features/create-lesson';
 import type { Lesson, LessonWithBookings, UserProfile } from '@/shared/types';
 import styles from './styles.module.scss';
 
@@ -16,7 +17,6 @@ type TeacherTodayViewProps = {
     bookedCount: number;
 };
 
-// Заглушка: создание занятия — шаг 6.10
 export const TeacherTodayView = ({
     user,
     lessons,
@@ -24,9 +24,11 @@ export const TeacherTodayView = ({
     bookedCount,
 }: TeacherTodayViewProps) => {
     const [selectedLesson, setSelectedLesson] = useState<Lesson | null>(null);
+    const [isOpenCreate, setIsOpenCreate] = useState(false);
 
     const handleCloseLesson = () => setSelectedLesson(null);
-    const handleCreateLesson = () => alert('Создание занятия будет реализовано на шаге 6.10');
+    const handleOpenCreate = () => setIsOpenCreate(true);
+    const handleCloseCreate = () => setIsOpenCreate(false);
 
     return (
         <main className={styles.teacherTodayView}>
@@ -38,9 +40,11 @@ export const TeacherTodayView = ({
 
             <TeacherTodayLessons lessons={lessons} onSelectLesson={setSelectedLesson} />
 
-            <TeacherTodayFab onClick={handleCreateLesson} />
+            <TeacherTodayFab onClick={handleOpenCreate} />
 
             <TeacherLessonModal lesson={selectedLesson} onClose={handleCloseLesson} />
+
+            <CreateLessonModal isOpen={isOpenCreate} onClose={handleCloseCreate} />
         </main>
     );
 };

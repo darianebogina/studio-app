@@ -40,3 +40,15 @@ export const getTodayRange = () => {
 
     return { dateFrom, dateTo: addDays(dateFrom, 1) };
 };
+
+export const formatInputDate = (date: Date) => format(toStudioTime(date), 'yyyy-MM-dd');
+
+// Дата и время из полей формы — время студии. TZDate.toISOString() отдаёт смещение +03:00,
+// поэтому для БД пересобираем обычный Date и получаем UTC с Z
+export const toUtcIsoString = (date: string, time: string) => {
+    const [year, month, day] = date.split('-').map(Number);
+    const [hours, minutes] = time.split(':').map(Number);
+    const studioDate = new TZDate(year, month - 1, day, hours, minutes, TIME_ZONE);
+
+    return new Date(studioDate.getTime()).toISOString();
+};
