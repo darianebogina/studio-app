@@ -1,3 +1,4 @@
+import { pluralize } from '@/shared/lib/plural';
 import type { BookingWithStudent, LessonType, Subscription } from '@/shared/types';
 
 type SubscriptionBalance = {
@@ -20,3 +21,8 @@ export const getAttendedBookingIds = (bookings: BookingWithStudent[]) => new Set
 
 export const isSameIds = (first: Set<string>, second: Set<string>) =>
     first.size === second.size && [...first].every((id) => second.has(id));
+
+// markedCount = 0, когда преподаватель только снял галки: тогда отмечать некого, пишем общий текст
+export const getAttendanceSuccessMessage = (markedCount: number) => (markedCount > 0
+    ? `${pluralize(markedCount, ['Отмечен', 'Отмечены', 'Отмечено'])} ${markedCount} ${pluralize(markedCount, ['человек', 'человека', 'человек'])}`
+    : 'Присутствие отмечено');

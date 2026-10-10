@@ -5,9 +5,11 @@ import { UserPlus } from 'lucide-react';
 import { CancelLessonButton } from '@/features/cancel-lesson-teacher';
 import { getMarkAttendanceErrorMessage, markAttendance, type MarkAttendanceResult } from '@/features/mark-attendance';
 import type { BookingWithStudent, Lesson } from '@/shared/types';
+import { toast } from '@/shared/ui-kit';
 import { loadLessonWithStudents } from '../api/load-lesson-with-students';
 import {
     ADD_STUDENT_ICON_SIZE,
+    getAttendanceSuccessMessage,
     getAttendedBookingIds,
     getSubscriptionBalance,
     isSameIds,
@@ -89,11 +91,14 @@ export const LessonAttendance = ({ lesson, reloadKey, onAddStudent, onClose }: L
                 .catch(() => NETWORK_ERROR_RESULT);
 
             if (result.ok) {
+                toast.success(getAttendanceSuccessMessage(result.markedCount));
                 onClose();
                 return;
             }
 
-            setErrorMessage(getMarkAttendanceErrorMessage(result.error));
+            const message = getMarkAttendanceErrorMessage(result.error);
+            setErrorMessage(message);
+            toast.error(message);
 
             // Часть изменений могла сохраниться: перечитываем список, чтобы подсветка осталась только на несохранённых.
             // Выбор преподавателя не сбрасываем, чтобы можно было повторить сохранение

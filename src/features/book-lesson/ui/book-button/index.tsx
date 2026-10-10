@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useTransition } from 'react';
+import { toast } from '@/shared/ui-kit';
 import { bookLesson } from '../../api/book-lesson';
 import { getBookErrorMessage, type BookLessonResult } from '../../lib';
 import styles from './styles.module.scss';
@@ -24,10 +25,13 @@ export const BookButton = ({ lessonId, onSuccess, className }: BookButtonProps) 
             const result = await bookLesson(lessonId).catch(() => NETWORK_ERROR_RESULT);
 
             if (!result.ok) {
-                setErrorMessage(getBookErrorMessage(result.error));
+                const message = getBookErrorMessage(result.error);
+                setErrorMessage(message);
+                toast.error(message);
                 return;
             }
 
+            toast.success('Вы записались на занятие');
             onSuccess?.();
         });
     };

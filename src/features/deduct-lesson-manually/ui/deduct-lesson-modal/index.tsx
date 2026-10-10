@@ -2,7 +2,7 @@
 
 import { useState, useTransition } from 'react';
 import type { LessonKind } from '@/shared/types';
-import { Modal } from '@/shared/ui-kit';
+import { Modal, toast } from '@/shared/ui-kit';
 import { deductLessonManually } from '../../api/deduct-lesson-manually';
 import { getDeductErrorMessage, LESSON_KINDS, type DeductResult } from '../../lib';
 import styles from './styles.module.scss';
@@ -43,10 +43,13 @@ export const DeductLessonModal = ({
                 .catch(() => NETWORK_ERROR_RESULT);
 
             if (!result.ok) {
-                setErrorMessage(getDeductErrorMessage(result.error));
+                const message = getDeductErrorMessage(result.error);
+                setErrorMessage(message);
+                toast.error(message);
                 return;
             }
 
+            toast.success('Занятие списано');
             handleClose();
         });
     };

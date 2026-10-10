@@ -3,6 +3,7 @@
 import { useState, useTransition } from 'react';
 import { formatInputDate, getTodayDate, toUtcIsoString } from '@/shared/lib/date';
 import type { FormStatus, LessonType, UserProfile } from '@/shared/types';
+import { toast } from '@/shared/ui-kit';
 import { createLesson } from '../../../api/create-lesson';
 import { loadStudents } from '../../../api/load-students';
 import {
@@ -77,10 +78,13 @@ export const CreateLessonForm = ({ defaultDate, onCreated }: CreateLessonFormPro
             }).catch(() => NETWORK_ERROR_RESULT);
 
             if (!result.ok) {
-                setErrorMessage(getCreateLessonErrorMessage(result.error));
+                const message = getCreateLessonErrorMessage(result.error);
+                setErrorMessage(message);
+                toast.error(message);
                 return;
             }
 
+            toast.success('Занятие создано');
             onCreated();
         });
     };

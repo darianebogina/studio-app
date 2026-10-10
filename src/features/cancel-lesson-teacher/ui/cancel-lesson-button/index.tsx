@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useTransition } from 'react';
+import { toast } from '@/shared/ui-kit';
 import { cancelLesson } from '../../api/cancel-lesson';
 import { CONFIRM_MESSAGE, getCancelLessonErrorMessage, type CancelLessonResult } from '../../lib';
 import styles from './styles.module.scss';
@@ -26,10 +27,13 @@ export const CancelLessonButton = ({ lessonId, onSuccess }: CancelLessonButtonPr
             const result = await cancelLesson({ lessonId }).catch(() => NETWORK_ERROR_RESULT);
 
             if (!result.ok) {
-                setErrorMessage(getCancelLessonErrorMessage(result.error));
+                const message = getCancelLessonErrorMessage(result.error);
+                setErrorMessage(message);
+                toast.error(message);
                 return;
             }
 
+            toast.success('Занятие отменено');
             onSuccess?.();
         });
     };

@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useTransition } from 'react';
+import { toast } from '@/shared/ui-kit';
 import { cancelBooking } from '../../api/cancel-booking';
 import { CONFIRM_MESSAGE, getCancelErrorMessage, type CancelBookingResult } from '../../lib';
 import styles from './styles.module.scss';
@@ -27,10 +28,13 @@ export const CancelButton = ({ lessonId, onSuccess, className }: CancelButtonPro
             const result = await cancelBooking(lessonId).catch(() => NETWORK_ERROR_RESULT);
 
             if (!result.ok) {
-                setErrorMessage(getCancelErrorMessage(result.error));
+                const message = getCancelErrorMessage(result.error);
+                setErrorMessage(message);
+                toast.error(message);
                 return;
             }
 
+            toast.success('Запись отменена');
             onSuccess?.();
         });
     };

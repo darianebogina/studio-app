@@ -4,6 +4,7 @@ import { useEffect, useState, useTransition } from 'react';
 import { Search } from 'lucide-react';
 import { Avatar } from '@/entities/user';
 import type { UserProfile } from '@/shared/types';
+import { toast } from '@/shared/ui-kit';
 import { addStudentToLesson } from '../../../api/add-student-to-lesson';
 import { loadStudentsNotOnLesson } from '../../../api/load-students-not-on-lesson';
 import {
@@ -53,10 +54,13 @@ export const StudentPicker = ({ lessonId, onAdded }: StudentPickerProps) => {
             const result = await addStudentToLesson({ lessonId, userId }).catch(() => NETWORK_ERROR_RESULT);
 
             if (!result.ok) {
-                setErrorMessage(getAddStudentErrorMessage(result.error));
+                const message = getAddStudentErrorMessage(result.error);
+                setErrorMessage(message);
+                toast.error(message);
                 return;
             }
 
+            toast.success('Ученик добавлен');
             setStudents((prev) => (prev ?? []).filter(({ id }) => id !== userId));
             onAdded?.();
         });
