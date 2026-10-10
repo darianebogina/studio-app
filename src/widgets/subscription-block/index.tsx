@@ -2,7 +2,8 @@
 
 import { useState } from 'react';
 import { LedgerHistory } from '@/entities/ledger';
-import { isSubscriptionOverMonth, PLAN_LABELS, SubscriptionCard } from '@/entities/subscription';
+import { getMonthsSincePurchase, PLAN_LABELS, SubscriptionCard } from '@/entities/subscription';
+import { pluralize } from '@/shared/lib/plural';
 import type { LedgerEntry, Subscription } from '@/shared/types';
 import { Modal } from '@/shared/ui-kit';
 import styles from './styles.module.scss';
@@ -28,7 +29,10 @@ export const SubscriptionBlock = ({ subscription, ledgerEntries }: SubscriptionB
         );
     }
 
-    const isOverMonth = isSubscriptionOverMonth(subscription.purchased_at);
+    const monthsSincePurchase = getMonthsSincePurchase(subscription.purchased_at);
+    const isOverMonth = monthsSincePurchase >= 1;
+    const passedVerb = pluralize(monthsSincePurchase, ['Прошёл', 'Прошло', 'Прошло']);
+    const monthsWord = pluralize(monthsSincePurchase, ['месяц', 'месяца', 'месяцев']);
     const purchasedDate = new Date(subscription.purchased_at).toLocaleDateString('ru-RU');
 
     return (
@@ -42,7 +46,9 @@ export const SubscriptionBlock = ({ subscription, ledgerEntries }: SubscriptionB
             >
                 {isOverMonth && (
                     <div className={styles.warning}>
-                        <p className={styles.warningTitle}>Прошёл месяц с покупки</p>
+                        <p className={styles.warningTitle}>
+                            {passedVerb} {monthsSincePurchase} {monthsWord} с покупки
+                        </p>
                         <p className={styles.warningText}>Возможно, пора продлить</p>
                     </div>
                 )}

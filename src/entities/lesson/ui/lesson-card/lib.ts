@@ -34,7 +34,7 @@ export const getMetaLabel = ({ type, variant, bookedCount, studentName }: GetMet
     }
 
     if (bookedCount !== undefined) {
-        return `${bookedCount} ${pluralize(bookedCount, ['записан', 'записаны', 'записано'])}`;
+        return `${bookedCount} ${pluralize(bookedCount, ['ученик', 'ученика', 'учеников'])}`;
     }
 
     return LESSON_META_LABELS[type];

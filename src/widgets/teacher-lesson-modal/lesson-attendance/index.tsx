@@ -4,6 +4,7 @@ import { useEffect, useState, useTransition } from 'react';
 import { UserPlus } from 'lucide-react';
 import { CancelLessonButton } from '@/features/cancel-lesson-teacher';
 import { getMarkAttendanceErrorMessage, markAttendance, type MarkAttendanceResult } from '@/features/mark-attendance';
+import { pluralize } from '@/shared/lib/plural';
 import type { BookingWithStudent, Lesson } from '@/shared/types';
 import { Skeleton, Spinner, toast } from '@/shared/ui-kit';
 import { loadLessonWithStudents } from '../api/load-lesson-with-students';
@@ -128,7 +129,7 @@ export const LessonAttendance = ({ lesson, reloadKey, onAddStudent, onClose }: L
     return (
         <div className={styles.lessonAttendance}>
             <section className={styles.section}>
-                <h3 className={styles.sectionTitle}>Записаны ({bookings.length})</h3>
+                <h3 className={styles.sectionTitle}>Записано: {bookings.length} {pluralize(bookings.length, ['ученик', 'ученика', 'учеников'])}</h3>
 
                 {bookings.length === 0 && <p className={styles.empty}>Никто не записан</p>}
 

@@ -1,18 +1,8 @@
+import { pluralize } from '@/shared/lib/plural';
 import type { LessonType } from '@/shared/types';
 
-const MINUTE_FORMS: Record<Intl.LDMLPluralRule, string> = {
-    zero: 'минут',
-    one: 'минута',
-    two: 'минуты',
-    few: 'минуты',
-    many: 'минут',
-    other: 'минуты',
-};
-
-const pluralRules = new Intl.PluralRules('ru');
-
 export const formatDuration = (minutes: number) =>
-    `${minutes} ${MINUTE_FORMS[pluralRules.select(minutes)]}`;
+    `${minutes} ${pluralize(minutes, ['минута', 'минуты', 'минут'])}`;
 
 export const DEDUCTION_HINTS: Record<LessonType, string> = {
     vogue: 'Спишется 1 групповое занятие после отметки присутствия',

@@ -18,7 +18,7 @@ export const TodayStats = ({ lessonsCount, bookedCount }: TodayStatsProps) => (
         <div className={styles.tile}>
             <span className={styles.value}>{bookedCount}</span>
             <span className={styles.label}>
-                {pluralize(bookedCount, ['записанный', 'записанных', 'записанных'])}
+                {pluralize(bookedCount, ['ученик', 'ученика', 'учеников'])}
             </span>
         </div>
     </div>
