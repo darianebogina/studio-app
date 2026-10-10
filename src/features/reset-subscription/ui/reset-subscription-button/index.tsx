@@ -1,9 +1,9 @@
 'use client';
 
 import { useTransition } from 'react';
-import { toast } from '@/shared/ui-kit';
+import { confirm, toast } from '@/shared/ui-kit';
 import { resetSubscription } from '../../api/reset-subscription';
-import { CONFIRM_MESSAGE, getResetErrorMessage, type ResetResult } from '../../lib';
+import { CONFIRM_OPTIONS, getResetErrorMessage, type ResetResult } from '../../lib';
 import styles from './styles.module.scss';
 
 type ResetSubscriptionButtonProps = {
@@ -17,9 +17,9 @@ const NETWORK_ERROR_RESULT: ResetResult = { ok: false, error: 'unknown' };
 export const ResetSubscriptionButton = ({ userId, onSuccess, disabled }: ResetSubscriptionButtonProps) => {
     const [isPending, startTransition] = useTransition();
 
-    // Нативный confirm(): своего ConfirmDialog в ui-kit пока нет
-    const handleClick = () => {
-        if (!window.confirm(CONFIRM_MESSAGE)) return;
+    const handleClick = async () => {
+        const isConfirmed = await confirm(CONFIRM_OPTIONS);
+        if (!isConfirmed) return;
 
         startTransition(async () => {
             const result = await resetSubscription({ userId }).catch(() => NETWORK_ERROR_RESULT);

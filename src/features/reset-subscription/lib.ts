@@ -1,10 +1,18 @@
+import type { ConfirmOptions } from '@/shared/ui-kit';
+
 export type ResetError = 'unauthorized' | 'no_active_subscription' | 'unknown';
 
 export type ResetResult = { ok: true } | { ok: false; error: ResetError };
 
 export const STUDENTS_PATH = '/teacher/students';
 
-export const CONFIRM_MESSAGE = 'Аннулировать абонемент? Это действие нельзя отменить.';
+export const CONFIRM_OPTIONS: ConfirmOptions = {
+    title: 'Аннулировать абонемент?',
+    description: 'Остаток занятий будет обнулён. Это действие нельзя отменить.',
+    confirmText: 'Аннулировать',
+    cancelText: 'Назад',
+    danger: true,
+};
 
 const RESET_ERROR_MESSAGES: Record<ResetError, string> = {
     unauthorized: 'Нет прав для аннулирования',

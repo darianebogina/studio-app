@@ -1,0 +1,45 @@
+@use '@/shared/ui-kit/styles' as *;
+
+.description {
+    @include text-secondary;
+    margin-top: calc(-1 * var(--space-2));
+}
+
+.actions {
+    display: flex;
+    gap: var(--space-2);
+}
+
+.button {
+    @include reset-button;
+    @include text-body;
+    flex: 1;
+    padding: var(--space-3);
+    border-radius: var(--radius-md);
+    font-weight: var(--font-weight-medium);
+    transition: opacity var(--transition-fast);
+
+    &:hover {
+        opacity: var(--opacity-hover);
+    }
+
+    &:focus-visible {
+        outline: var(--border-width-thin) solid var(--color-text-primary);
+        outline-offset: var(--space-1);
+    }
+}
+
+.cancel {
+    border: var(--border-width-thin) solid var(--color-border-strong);
+    color: var(--color-text-secondary);
+}
+
+.primary {
+    background: var(--color-accent);
+    color: var(--color-on-accent);
+}
+
+.danger {
+    background: var(--color-danger);
+    color: var(--color-text-primary);
+}

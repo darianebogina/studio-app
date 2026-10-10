@@ -1,9 +1,9 @@
 'use client';
 
 import { useState, useTransition } from 'react';
-import { toast } from '@/shared/ui-kit';
+import { confirm, toast } from '@/shared/ui-kit';
 import { cancelBooking } from '../../api/cancel-booking';
-import { CONFIRM_MESSAGE, getCancelErrorMessage, type CancelBookingResult } from '../../lib';
+import { CONFIRM_OPTIONS, getCancelErrorMessage, type CancelBookingResult } from '../../lib';
 import styles from './styles.module.scss';
 
 type CancelButtonProps = {
@@ -18,9 +18,9 @@ export const CancelButton = ({ lessonId, onSuccess, className }: CancelButtonPro
     const [isPending, startTransition] = useTransition();
     const [errorMessage, setErrorMessage] = useState('');
 
-    // Нативный confirm(): своего ConfirmDialog в ui-kit пока нет
-    const handleClick = () => {
-        if (!window.confirm(CONFIRM_MESSAGE)) return;
+    const handleClick = async () => {
+        const isConfirmed = await confirm(CONFIRM_OPTIONS);
+        if (!isConfirmed) return;
 
         setErrorMessage('');
 

@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
 import type { Metadata } from 'next';
 import { Toaster } from 'sonner';
-import { fontVariables } from '@/shared/ui-kit';
+import { ConfirmDialogProvider, fontVariables } from '@/shared/ui-kit';
 import '@/shared/ui-kit/styles/tokens.scss';
 import '@/app/styles/globals.css';
 
@@ -24,6 +24,8 @@ const RootLayout = ({ children }: RootLayoutProps) => (
                 theme="dark"
                 richColors
             />
+
+            <ConfirmDialogProvider />
         </body>
     </html>
 );
