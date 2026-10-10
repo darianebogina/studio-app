@@ -1,15 +1,24 @@
 'use client';
 
 import { useEffect, useState, useTransition } from 'react';
+import { UserPlus } from 'lucide-react';
 import { CancelLessonButton } from '@/features/cancel-lesson-teacher';
 import { getMarkAttendanceErrorMessage, markAttendance, type MarkAttendanceResult } from '@/features/mark-attendance';
 import type { BookingWithStudent, Lesson } from '@/shared/types';
 import { loadLessonWithStudents } from '../api/load-lesson-with-students';
-import { getAttendedBookingIds, getSubscriptionBalance, isSameIds, NO_SUBSCRIPTION_LABEL } from '../lib';
+import {
+    ADD_STUDENT_ICON_SIZE,
+    getAttendedBookingIds,
+    getSubscriptionBalance,
+    isSameIds,
+    NO_SUBSCRIPTION_LABEL,
+} from '../lib';
 import styles from './styles.module.scss';
 
 type LessonAttendanceProps = {
     lesson: Lesson;
+    reloadKey: number;
+    onAddStudent: () => void;
     onClose: () => void;
 };
 
@@ -20,7 +29,7 @@ const fetchBookings = (lessonId: string) =>
         .then((data) => data?.bookings ?? null)
         .catch(() => null);
 
-export const LessonAttendance = ({ lesson, onClose }: LessonAttendanceProps) => {
+export const LessonAttendance = ({ lesson, reloadKey, onAddStudent, onClose }: LessonAttendanceProps) => {
     const [bookings, setBookings] = useState<BookingWithStudent[] | null>(null);
     const [isLoadFailed, setIsLoadFailed] = useState(false);
     const [attendedBookingIds, setAttendedBookingIds] = useState<Set<string>>(() => new Set());
@@ -42,6 +51,22 @@ export const LessonAttendance = ({ lesson, onClose }: LessonAttendanceProps) => 
             isActual = false;
         };
     }, [lesson.id]);
+
+    // Перечитываем список после добавления ученика. Выбор преподавателя не сбрасываем:
+    // новые записи приходят в booked, и галки у них и так нет
+    useEffect(() => {
+        if (reloadKey === 0) return;
+
+        let isActual = true;
+
+        fetchBookings(lesson.id).then((freshBookings) => {
+            if (isActual && freshBookings) setBookings(freshBookings);
+        });
+
+        return () => {
+            isActual = false;
+        };
+    }, [lesson.id, reloadKey]);
 
     const handleToggle = (bookingId: string) => setAttendedBookingIds((prev) => (
         prev.has(bookingId)
@@ -121,6 +146,16 @@ export const LessonAttendance = ({ lesson, onClose }: LessonAttendanceProps) => 
                     </ul>
                 )}
             </section>
+
+            <button
+                type="button"
+                disabled={isPending}
+                onClick={onAddStudent}
+                className={styles.addStudent}
+            >
+                <UserPlus size={ADD_STUDENT_ICON_SIZE} aria-hidden="true" />
+                Добавить ученика
+            </button>
 
             <div className={styles.actions}>
                 <button

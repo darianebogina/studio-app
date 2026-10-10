@@ -1,0 +1,103 @@
+@use '@/shared/ui-kit/styles' as *;
+
+.studentPicker {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+}
+
+.status {
+    @include text-secondary;
+    padding: var(--space-4) 0;
+    text-align: center;
+}
+
+.search {
+    position: relative;
+    display: flex;
+}
+
+.searchIcon {
+    position: absolute;
+    top: 50%;
+    left: var(--space-3);
+    color: var(--color-text-muted);
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+
+.searchInput {
+    @include text-body;
+    width: 100%;
+    padding: var(--space-3) var(--space-4);
+    // Слева место под иконку: её отступ, ширина и зазор до текста
+    padding-left: calc(var(--space-3) + var(--space-4) + var(--space-2));
+    border: var(--border-thin);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+    color: var(--color-text-primary);
+    font-family: inherit;
+    outline: none;
+
+    &:focus {
+        border-color: var(--color-accent);
+    }
+
+    &::placeholder {
+        color: var(--color-text-placeholder);
+    }
+}
+
+.error {
+    @include text-caption;
+    color: var(--color-danger);
+    text-align: center;
+}
+
+.students {
+    display: flex;
+    flex-direction: column;
+    max-height: var(--student-picker-max-height);
+    overflow-y: auto;
+}
+
+.student {
+    @include reset-button;
+    @include disabled;
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    width: 100%;
+    padding: var(--space-2);
+    border-radius: var(--radius-sm);
+    text-align: left;
+    transition: background var(--transition-fast);
+
+    &:hover:not(:disabled) {
+        background: var(--color-hover);
+    }
+
+    &:focus-visible {
+        outline: var(--border-width-thin) solid var(--color-accent);
+    }
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.name {
+    @include text-body;
+    overflow: hidden;
+    color: var(--color-text-primary);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.phone {
+    font-size: var(--font-size-2xs);
+    line-height: var(--line-height-normal);
+    color: var(--color-text-muted);
+}

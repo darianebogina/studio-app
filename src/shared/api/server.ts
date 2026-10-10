@@ -6,6 +6,7 @@ export { getLessonWithStudents } from './get-lesson-with-students';
 export { getLessonsByRange } from './get-lessons-by-range';
 export { getLessonsByRangeWithBookings } from './get-lessons-by-range-with-bookings';
 export { getStudentById } from './get-student-by-id';
+export { getStudentsNotOnLesson } from './get-students-not-on-lesson';
 export { getTodayLessonsWithBookings } from './get-today-lessons-with-bookings';
 export { getUserBooking } from './get-user-booking';
 export { getUserBookingsByLessonIds } from './get-user-bookings-by-lesson-ids';

@@ -7,6 +7,8 @@ type SubscriptionBalance = {
 
 export const NO_SUBSCRIPTION_LABEL = 'Нет абонемента';
 
+export const ADD_STUDENT_ICON_SIZE = 16;
+
 export const getSubscriptionBalance = (subscription: Subscription, type: LessonType): SubscriptionBalance =>
     type === 'vogue'
         ? { remaining: subscription.group_remaining, total: subscription.group_total }
