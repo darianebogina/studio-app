@@ -1,13 +1,22 @@
-import { getUserRole, getUserUpcomingBookings } from '@/shared/api/server';
-import { StudentBookingsView } from './student-bookings-view';
+import { Suspense } from 'react';
+import { Skeleton } from '@/shared/ui-kit';
+import { StudentBookingsContent } from './student-bookings-content';
+import styles from './styles.module.scss';
 
-export const StudentBookingsPage = async () => {
-    const user = await getUserRole();
-
-    // proxy.ts уже редиректит неавторизованных на /login
-    if (!user) return null;
-
-    const bookings = await getUserUpcomingBookings(user.id);
-
-    return <StudentBookingsView bookings={bookings} currentUserId={user.id} />;
-};
+export const StudentBookingsPage = () => (
+    <Suspense
+        fallback={(
+            <main className={styles.skeletons}>
+                {Array.from({ length: 3 }).map((_, index) => (
+                    <Skeleton
+                        key={index}
+                        height={78}
+                        borderRadius="var(--radius-md)"
+                    />
+                ))}
+            </main>
+        )}
+    >
+        <StudentBookingsContent />
+    </Suspense>
+);

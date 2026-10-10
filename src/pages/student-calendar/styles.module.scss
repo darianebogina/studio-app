@@ -1,15 +1,13 @@
 @use '@/shared/ui-kit/styles' as *;
 
-.teacherStudentsPage {
+.skeletons {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
     padding: var(--space-5);
 }
 
-.title {
-    @include text-title;
-    margin: 0 0 var(--space-4);
-}
-
-.skeletons {
+.lessons {
     display: flex;
     flex-direction: column;
     gap: var(--space-3);

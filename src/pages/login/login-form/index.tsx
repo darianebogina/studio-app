@@ -4,6 +4,7 @@ import { useState, type ChangeEvent, type FormEvent } from 'react';
 import Link from 'next/link';
 import { getAuthErrorMessage, MagicLinkSent, sendOtp } from '@/features/auth';
 import type { FormStatus } from '@/shared/types';
+import { Spinner } from '@/shared/ui-kit';
 import styles from './styles.module.scss';
 
 export const LoginForm = () => {
@@ -63,7 +64,7 @@ export const LoginForm = () => {
                 disabled={isLoading || !email}
                 className={styles.button}
             >
-                {isLoading ? 'Отправляем...' : 'Прислать ссылку'}
+                {isLoading ? <Spinner size="md" color="dark" /> : 'Прислать ссылку'}
             </button>
 
             <Link href="/register" className={styles.link}>

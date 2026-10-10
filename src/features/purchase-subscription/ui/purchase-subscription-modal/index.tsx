@@ -4,7 +4,7 @@ import { useState, useTransition } from 'react';
 import { PLAN_LABELS, PLANS } from '@/entities/subscription';
 import { getTodayDate } from '@/shared/lib/date';
 import type { SubscriptionPlan } from '@/shared/types';
-import { Modal, toast } from '@/shared/ui-kit';
+import { Modal, Spinner, toast } from '@/shared/ui-kit';
 import { purchaseSubscription } from '../../api/purchase-subscription';
 import { getPurchaseErrorMessage } from '../../lib';
 import { DEFAULT_PLAN, formatPrice, getSubmitLabel, NETWORK_ERROR_RESULT } from './lib';
@@ -104,7 +104,7 @@ export const PurchaseSubscriptionModal = ({
                 onClick={handleSubmit}
                 className={styles.submit}
             >
-                {isPending ? 'Оформляем...' : getSubmitLabel(selectedPlan)}
+                {isPending ? <Spinner size="md" color="dark" /> : getSubmitLabel(selectedPlan)}
             </button>
 
             {errorMessage && <p className={styles.error}>{errorMessage}</p>}

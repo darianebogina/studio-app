@@ -1,15 +1,24 @@
-import { StudentsList } from '@/widgets/students-list';
-import { getAllStudents } from '@/shared/api/server';
+import { Suspense } from 'react';
+import { Skeleton } from '@/shared/ui-kit';
+import { TeacherStudentsContent } from './teacher-students-content';
 import styles from './styles.module.scss';
 
-export const TeacherStudentsPage = async () => {
-    const students = await getAllStudents();
+export const TeacherStudentsPage = () => (
+    <main className={styles.teacherStudentsPage}>
+        <h1 className={styles.title}>Ученики</h1>
 
-    return (
-        <main className={styles.teacherStudentsPage}>
-            <h1 className={styles.title}>Ученики</h1>
+        <Suspense
+            fallback={(
+                <div className={styles.skeletons}>
+                    <Skeleton height={44} borderRadius="var(--radius-md)" />
 
-            <StudentsList students={students} />
-        </main>
-    );
-};
+                    {Array.from({ length: 6 }).map((_, index) => (
+                        <Skeleton key={index} height={60} />
+                    ))}
+                </div>
+            )}
+        >
+            <TeacherStudentsContent />
+        </Suspense>
+    </main>
+);

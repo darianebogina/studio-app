@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useTransition } from 'react';
-import { confirm, toast } from '@/shared/ui-kit';
+import { confirm, Spinner, toast } from '@/shared/ui-kit';
 import { cancelLesson } from '../../api/cancel-lesson';
 import { CONFIRM_OPTIONS, getCancelLessonErrorMessage, type CancelLessonResult } from '../../lib';
 import styles from './styles.module.scss';
@@ -46,7 +46,7 @@ export const CancelLessonButton = ({ lessonId, onSuccess }: CancelLessonButtonPr
                 onClick={handleClick}
                 className={styles.button}
             >
-                {isPending ? 'Отменяем...' : 'Отменить занятие'}
+                {isPending ? <Spinner size="md" /> : 'Отменить занятие'}
             </button>
 
             {errorMessage && <p className={styles.error}>{errorMessage}</p>}

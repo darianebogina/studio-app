@@ -1,0 +1,10 @@
+@use '@/shared/ui-kit/styles' as *;
+
+.empty {
+    @include text-secondary;
+    margin: 0;
+    padding: var(--space-6) var(--space-5);
+    border: var(--border-dashed);
+    border-radius: var(--radius-md);
+    text-align: center;
+}

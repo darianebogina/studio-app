@@ -1,12 +1,9 @@
+import { Suspense } from 'react';
 import Link from 'next/link';
-import { notFound } from 'next/navigation';
 import { ChevronLeft } from 'lucide-react';
-import { StudentActions } from '@/widgets/student-actions';
-import { StudentDetailHeader } from '@/widgets/student-detail-header';
-import { StudentHistory } from '@/widgets/student-history';
-import { SubscriptionCard } from '@/entities/subscription';
-import { getActiveSubscription, getLedgerEntries, getStudentById } from '@/shared/api/server';
+import { Skeleton } from '@/shared/ui-kit';
 import { BACK_ICON_SIZE } from './lib';
+import { TeacherStudentDetailContent } from './teacher-student-detail-content';
 import styles from './styles.module.scss';
 
 type TeacherStudentDetailPageProps = {
@@ -15,16 +12,6 @@ type TeacherStudentDetailPageProps = {
 
 export const TeacherStudentDetailPage = async ({ params }: TeacherStudentDetailPageProps) => {
     const { id } = await params;
-    const student = await getStudentById(id);
-
-    if (!student) {
-        notFound();
-    }
-
-    const [subscription, ledgerEntries] = await Promise.all([
-        getActiveSubscription(id),
-        getLedgerEntries(id),
-    ]);
 
     return (
         <main className={styles.teacherStudentDetailPage}>
@@ -36,19 +23,30 @@ export const TeacherStudentDetailPage = async ({ params }: TeacherStudentDetailP
                 <ChevronLeft size={BACK_ICON_SIZE} aria-hidden="true" />
             </Link>
 
-            <StudentDetailHeader user={student} />
+            <Suspense
+                fallback={(
+                    <>
+                        <div className={styles.profile}>
+                            <Skeleton variant="circular" height={64} />
 
-            {subscription && <SubscriptionCard subscription={subscription} />}
+                            <div className={styles.profileInfo}>
+                                <Skeleton width="45%" height={20} />
+                                <Skeleton width="65%" height={12} />
+                            </div>
+                        </div>
 
-            {!subscription && <p className={styles.empty}>Нет активного абонемента</p>}
+                        <Skeleton height={128} borderRadius="var(--radius-md)" />
 
-            <StudentActions
-                userId={student.id}
-                userName={`${student.first_name} ${student.last_name}`}
-                hasActiveSubscription={subscription !== null}
-            />
+                        <Skeleton height={44} borderRadius="var(--radius-md)" />
 
-            <StudentHistory entries={ledgerEntries} />
+                        {Array.from({ length: 4 }).map((_, index) => (
+                            <Skeleton key={index} height={44} />
+                        ))}
+                    </>
+                )}
+            >
+                <TeacherStudentDetailContent id={id} />
+            </Suspense>
         </main>
     );
 };

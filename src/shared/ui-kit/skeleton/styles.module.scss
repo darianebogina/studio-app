@@ -1,0 +1,18 @@
+@use '@/shared/ui-kit/styles' as *;
+
+.skeleton {
+    flex-shrink: 0;
+    background: var(--color-skeleton);
+    animation: pulse var(--duration-pulse) ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%,
+    100% {
+        opacity: var(--opacity-skeleton);
+    }
+
+    50% {
+        opacity: 1;
+    }
+}

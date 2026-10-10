@@ -29,6 +29,9 @@
 .button {
     @include reset-button;
     @include disabled;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     background: var(--color-accent);
     color: var(--color-on-accent);
     border-radius: var(--radius-md);

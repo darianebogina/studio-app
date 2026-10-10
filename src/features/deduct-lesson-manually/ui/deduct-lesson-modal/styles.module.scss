@@ -63,6 +63,9 @@
     @include reset-button;
     @include text-body;
     @include disabled;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 100%;
     padding: var(--space-3);
     border-radius: var(--radius-md);

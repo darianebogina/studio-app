@@ -1,7 +1,7 @@
 'use client';
 
 import { useTransition } from 'react';
-import { confirm, toast } from '@/shared/ui-kit';
+import { confirm, Spinner, toast } from '@/shared/ui-kit';
 import { resetSubscription } from '../../api/reset-subscription';
 import { CONFIRM_OPTIONS, getResetErrorMessage, type ResetResult } from '../../lib';
 import styles from './styles.module.scss';
@@ -41,7 +41,7 @@ export const ResetSubscriptionButton = ({ userId, onSuccess, disabled }: ResetSu
             onClick={handleClick}
             className={styles.resetSubscriptionButton}
         >
-            {isPending ? 'Аннулируем...' : 'Аннулировать абонемент'}
+            {isPending ? <Spinner size="md" /> : 'Аннулировать абонемент'}
         </button>
     );
 };

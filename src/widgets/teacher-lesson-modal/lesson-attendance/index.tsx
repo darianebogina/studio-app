@@ -5,7 +5,7 @@ import { UserPlus } from 'lucide-react';
 import { CancelLessonButton } from '@/features/cancel-lesson-teacher';
 import { getMarkAttendanceErrorMessage, markAttendance, type MarkAttendanceResult } from '@/features/mark-attendance';
 import type { BookingWithStudent, Lesson } from '@/shared/types';
-import { toast } from '@/shared/ui-kit';
+import { Skeleton, Spinner, toast } from '@/shared/ui-kit';
 import { loadLessonWithStudents } from '../api/load-lesson-with-students';
 import {
     ADD_STUDENT_ICON_SIZE,
@@ -108,7 +108,18 @@ export const LessonAttendance = ({ lesson, reloadKey, onAddStudent, onClose }: L
     };
 
     if (isLoadFailed) return <p className={styles.status}>Не удалось загрузить список учеников</p>;
-    if (!bookings) return <p className={styles.status}>Загружаем...</p>;
+
+    if (!bookings) {
+        return (
+            <ul className={styles.skeletons}>
+                {Array.from({ length: 3 }).map((_, index) => (
+                    <li key={index}>
+                        <Skeleton height={44} />
+                    </li>
+                ))}
+            </ul>
+        );
+    }
 
     // Исходное состояние — статусы из БД: при открытии модалки и после перечитывания списка
     const initialAttendedIds = getAttendedBookingIds(bookings);
@@ -169,7 +180,7 @@ export const LessonAttendance = ({ lesson, reloadKey, onAddStudent, onClose }: L
                     onClick={handleSave}
                     className={styles.save}
                 >
-                    {isPending ? 'Сохраняем...' : 'Сохранить'}
+                    {isPending ? <Spinner size="md" color="dark" /> : 'Сохранить'}
                 </button>
 
                 {errorMessage && <p className={styles.error}>{errorMessage}</p>}

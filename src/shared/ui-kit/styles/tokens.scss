@@ -9,6 +9,7 @@
     --color-divider: #262626;
     --color-hover: rgba(255, 255, 255, 0.04);
     --color-overlay: rgba(0, 0, 0, 0.6);
+    --color-skeleton: var(--color-surface);
 
     // Цвета: текст
     --color-text-primary: #fff;
@@ -75,6 +76,8 @@
     --avatar-size-md: 48px;
     --avatar-size-lg: 64px;
     --fab-size: 52px;
+    --spinner-size-sm: 14px;
+    --spinner-size-md: 20px;
 
     // Скругления
     --radius-xs: 6px;
@@ -84,6 +87,7 @@
 
     // Границы
     --border-width-thin: 0.5px;
+    --border-width-medium: 2px;
     --border-width-accent: 3px;
     --border-thin: var(--border-width-thin) solid var(--color-border);
     --border-dashed: var(--border-width-thin) dashed var(--color-border);
@@ -92,9 +96,12 @@
     --opacity-disabled: 0.5;
     --opacity-cancelled: 0.35;
     --opacity-hover: 0.85;
+    --opacity-skeleton: 0.6;
     --transition-fast: 0.15s ease;
     --transition-normal: 0.2s ease;
     --blur-overlay: 4px;
+    --duration-spin: 0.6s;
+    --duration-pulse: 1.5s;
 
     // Тени
     --shadow-fab: 0 4px 16px rgba(0, 230, 118, 0.3);

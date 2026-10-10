@@ -2,7 +2,7 @@
 
 import { useState, useTransition } from 'react';
 import type { LessonKind } from '@/shared/types';
-import { Modal, toast } from '@/shared/ui-kit';
+import { Modal, Spinner, toast } from '@/shared/ui-kit';
 import { deductLessonManually } from '../../api/deduct-lesson-manually';
 import { getDeductErrorMessage, LESSON_KINDS, type DeductResult } from '../../lib';
 import styles from './styles.module.scss';
@@ -86,7 +86,7 @@ export const DeductLessonModal = ({
                 onClick={handleSubmit}
                 className={styles.submit}
             >
-                {isPending ? 'Списываем...' : 'Списать 1 занятие'}
+                {isPending ? <Spinner size="md" color="dark" /> : 'Списать 1 занятие'}
             </button>
 
             {errorMessage && <p className={styles.error}>{errorMessage}</p>}

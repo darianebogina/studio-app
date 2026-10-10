@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useTransition } from 'react';
-import { toast } from '@/shared/ui-kit';
+import { Spinner, toast } from '@/shared/ui-kit';
 import { bookLesson } from '../../api/book-lesson';
 import { getBookErrorMessage, type BookLessonResult } from '../../lib';
 import styles from './styles.module.scss';
@@ -44,7 +44,7 @@ export const BookButton = ({ lessonId, onSuccess, className }: BookButtonProps) 
                 onClick={handleClick}
                 className={styles.button}
             >
-                {isPending ? 'Записываем...' : 'Записаться'}
+                {isPending ? <Spinner size="md" color="dark" /> : 'Записаться'}
             </button>
 
             {errorMessage && <p className={styles.error}>{errorMessage}</p>}

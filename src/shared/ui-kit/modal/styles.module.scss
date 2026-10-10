@@ -38,6 +38,8 @@
 }
 
 .content {
+    // Фон модалки совпадает с цветом скелетона, поэтому внутри берём цвет посветлее
+    --color-skeleton: var(--color-surface-raised);
     display: flex;
     flex-direction: column;
     gap: var(--space-4);

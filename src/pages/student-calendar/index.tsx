@@ -1,29 +1,26 @@
-import { addDays } from 'date-fns';
-import { getLessonsByRange, getUserBookingsByLessonIds, getUserRole } from '@/shared/api/server';
-import { getWeekDays } from '@/shared/lib/date';
-import { StudentCalendarView } from './student-calendar-view';
+import { Suspense } from 'react';
+import { Skeleton } from '@/shared/ui-kit';
+import { StudentCalendarContent } from './student-calendar-content';
+import styles from './styles.module.scss';
 
-export const StudentCalendarPage = async () => {
-    const user = await getUserRole();
+export const StudentCalendarPage = () => (
+    <Suspense
+        fallback={(
+            <main className={styles.skeletons}>
+                <Skeleton height={60} borderRadius="var(--radius-md)" />
 
-    // proxy.ts уже редиректит неавторизованных на /login
-    if (!user) return null;
-
-    const weekDays = getWeekDays(new Date());
-    const dateFrom = weekDays[0];
-    const dateTo = addDays(dateFrom, weekDays.length);
-
-    const lessons = await getLessonsByRange({ dateFrom, dateTo });
-    const bookings = await getUserBookingsByLessonIds({
-        userId: user.id,
-        lessonIds: lessons.map(({ id }) => id),
-    });
-
-    return (
-        <StudentCalendarView
-            lessons={lessons}
-            bookedLessonIds={new Set(bookings.map(({ lesson_id: lessonId }) => lessonId))}
-            currentUserId={user.id}
-        />
-    );
-};
+                <div className={styles.lessons}>
+                    {Array.from({ length: 4 }).map((_, index) => (
+                        <Skeleton
+                            key={index}
+                            height={78}
+                            borderRadius="var(--radius-md)"
+                        />
+                    ))}
+                </div>
+            </main>
+        )}
+    >
+        <StudentCalendarContent />
+    </Suspense>
+);

@@ -3,7 +3,7 @@
 import { useState, useTransition } from 'react';
 import { formatInputDate, getTodayDate, toUtcIsoString } from '@/shared/lib/date';
 import type { FormStatus, LessonType, UserProfile } from '@/shared/types';
-import { toast } from '@/shared/ui-kit';
+import { Spinner, toast } from '@/shared/ui-kit';
 import { createLesson } from '../../../api/create-lesson';
 import { loadStudents } from '../../../api/load-students';
 import {
@@ -167,9 +167,7 @@ export const CreateLessonForm = ({ defaultDate, onCreated }: CreateLessonFormPro
                         onChange={(event) => setSelectedStudentId(event.target.value || null)}
                         className={styles.select}
                     >
-                        <option value="">
-                            {studentsStatus === 'loading' ? 'Загружаем...' : '— выберите из базы —'}
-                        </option>
+                        <option value="">— выберите из базы —</option>
 
                         {students.map(({ id, first_name: firstName, last_name: lastName }) => (
                             <option key={id} value={id}>{getStudentFullName(lastName, firstName)}</option>
@@ -199,7 +197,7 @@ export const CreateLessonForm = ({ defaultDate, onCreated }: CreateLessonFormPro
                 onClick={handleSubmit}
                 className={styles.submit}
             >
-                {isPending ? 'Создаём...' : 'Создать'}
+                {isPending ? <Spinner size="md" color="dark" /> : 'Создать'}
             </button>
 
             {errorMessage && <p className={styles.error}>{errorMessage}</p>}

@@ -4,7 +4,7 @@ import { useEffect, useState, useTransition } from 'react';
 import { Search } from 'lucide-react';
 import { Avatar } from '@/entities/user';
 import type { UserProfile } from '@/shared/types';
-import { toast } from '@/shared/ui-kit';
+import { Skeleton, toast } from '@/shared/ui-kit';
 import { addStudentToLesson } from '../../../api/add-student-to-lesson';
 import { loadStudentsNotOnLesson } from '../../../api/load-students-not-on-lesson';
 import {
@@ -67,7 +67,19 @@ export const StudentPicker = ({ lessonId, onAdded }: StudentPickerProps) => {
     };
 
     if (isLoadFailed) return <p className={styles.status}>Не удалось загрузить список учеников</p>;
-    if (!students) return <p className={styles.status}>Загружаем...</p>;
+
+    if (!students) {
+        return (
+            <ul className={styles.skeletons}>
+                {Array.from({ length: 3 }).map((_, index) => (
+                    <li key={index}>
+                        <Skeleton height={48} />
+                    </li>
+                ))}
+            </ul>
+        );
+    }
+
     if (students.length === 0) return <p className={styles.status}>Все ученики уже записаны</p>;
 
     const normalizedQuery = searchQuery.trim().toLowerCase();

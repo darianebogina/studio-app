@@ -1,20 +1,36 @@
-import { getTodayLessonsWithBookings, getUserRole } from '@/shared/api/server';
-import { TeacherTodayView } from './teacher-today-view';
+import { Suspense } from 'react';
+import { Skeleton } from '@/shared/ui-kit';
+import { TeacherTodayContent } from './teacher-today-content';
+import styles from './styles.module.scss';
 
-export const TeacherTodayPage = async () => {
-    const [user, lessons] = await Promise.all([getUserRole(), getTodayLessonsWithBookings()]);
+export const TeacherTodayPage = () => (
+    <Suspense
+        fallback={(
+            <main className={styles.skeletons}>
+                <div className={styles.profile}>
+                    <Skeleton variant="circular" height={64} />
 
-    // proxy.ts уже редиректит неавторизованных на /login
-    if (!user) return null;
+                    <div className={styles.profileInfo}>
+                        <Skeleton width="60%" height={24} />
+                        <Skeleton width="40%" />
+                    </div>
+                </div>
 
-    const bookedCount = lessons.reduce((sum, lesson) => sum + lesson.bookedCount, 0);
+                <div className={styles.stats}>
+                    <Skeleton height={72} borderRadius="var(--radius-md)" />
+                    <Skeleton height={72} borderRadius="var(--radius-md)" />
+                </div>
 
-    return (
-        <TeacherTodayView
-            user={user}
-            lessons={lessons}
-            lessonsCount={lessons.length}
-            bookedCount={bookedCount}
-        />
-    );
-};
+                {Array.from({ length: 3 }).map((_, index) => (
+                    <Skeleton
+                        key={index}
+                        height={78}
+                        borderRadius="var(--radius-md)"
+                    />
+                ))}
+            </main>
+        )}
+    >
+        <TeacherTodayContent />
+    </Suspense>
+);

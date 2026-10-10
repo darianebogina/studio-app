@@ -1,0 +1,38 @@
+@use '@/shared/ui-kit/styles' as *;
+
+.spinner {
+    display: inline-block;
+    flex-shrink: 0;
+    border: var(--border-width-medium) solid transparent;
+    border-top-color: currentColor;
+    border-radius: var(--radius-full);
+    animation: spin var(--duration-spin) linear infinite;
+}
+
+.sm {
+    width: var(--spinner-size-sm);
+    height: var(--spinner-size-sm);
+}
+
+.md {
+    width: var(--spinner-size-md);
+    height: var(--spinner-size-md);
+}
+
+.light {
+    color: var(--color-text-primary);
+}
+
+.dark {
+    color: var(--color-on-accent);
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}

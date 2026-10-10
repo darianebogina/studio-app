@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useTransition } from 'react';
-import { confirm, toast } from '@/shared/ui-kit';
+import { confirm, Spinner, toast } from '@/shared/ui-kit';
 import { cancelBooking } from '../../api/cancel-booking';
 import { CONFIRM_OPTIONS, getCancelErrorMessage, type CancelBookingResult } from '../../lib';
 import styles from './styles.module.scss';
@@ -47,7 +47,7 @@ export const CancelButton = ({ lessonId, onSuccess, className }: CancelButtonPro
                 onClick={handleClick}
                 className={styles.button}
             >
-                {isPending ? 'Отменяем...' : 'Отменить запись'}
+                {isPending ? <Spinner size="md" /> : 'Отменить запись'}
             </button>
 
             {errorMessage && <p className={styles.error}>{errorMessage}</p>}

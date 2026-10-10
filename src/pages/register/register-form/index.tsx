@@ -4,6 +4,7 @@ import { useState, type ChangeEvent, type FormEvent } from 'react';
 import Link from 'next/link';
 import { getAuthErrorMessage, MagicLinkSent, sendOtp } from '@/features/auth';
 import type { FormStatus } from '@/shared/types';
+import { Spinner } from '@/shared/ui-kit';
 import { INITIAL_DATA, type RegisterFormData } from './lib';
 import styles from './styles.module.scss';
 
@@ -112,7 +113,7 @@ export const RegisterForm = () => {
                 disabled={isLoading || !isValid}
                 className={styles.button}
             >
-                {isLoading ? 'Создаём...' : 'Создать аккаунт'}
+                {isLoading ? <Spinner size="md" color="dark" /> : 'Создать аккаунт'}
             </button>
 
             <p className={styles.hint}>На email придёт ссылка для подтверждения</p>

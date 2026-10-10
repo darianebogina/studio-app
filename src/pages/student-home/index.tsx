@@ -1,32 +1,32 @@
-import { ProfileHeader } from '@/widgets/profile-header';
-import { SubscriptionBlock } from '@/widgets/subscription-block';
+import { Suspense } from 'react';
 import { LogoutButton } from '@/features/auth';
-import { getActiveSubscription, getLedgerEntries, getUserRole } from '@/shared/api/server';
+import { Skeleton } from '@/shared/ui-kit';
+import { StudentHomeContent } from './student-home-content';
 import styles from './styles.module.scss';
 
-export const StudentHomePage = async () => {
-    const user = await getUserRole();
+export const StudentHomePage = () => (
+    <main className={styles.studentHomePage}>
+        <Suspense
+            fallback={(
+                <>
+                    <div className={styles.profile}>
+                        <Skeleton variant="circular" height={64} />
 
-    // proxy.ts уже редиректит неавторизованных на /login
-    if (!user) return null;
+                        <div className={styles.profileInfo}>
+                            <Skeleton width="60%" height={24} />
+                            <Skeleton width="40%" />
+                        </div>
+                    </div>
 
-    const [subscription, ledgerEntries] = await Promise.all([
-        getActiveSubscription(user.id),
-        getLedgerEntries(user.id),
-    ]);
+                    <Skeleton height={128} borderRadius="var(--radius-md)" />
+                </>
+            )}
+        >
+            <StudentHomeContent />
+        </Suspense>
 
-    return (
-        <main className={styles.studentHomePage}>
-            <ProfileHeader user={user} />
-
-            <SubscriptionBlock
-                subscription={subscription}
-                ledgerEntries={ledgerEntries}
-            />
-
-            <div className={styles.logout}>
-                <LogoutButton />
-            </div>
-        </main>
-    );
-};
+        <div className={styles.logout}>
+            <LogoutButton />
+        </div>
+    </main>
+);
