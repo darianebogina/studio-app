@@ -1,21 +1,37 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
-import { createBrowserClient } from '@/shared/api';
+import { useTransition } from 'react';
+import { unstable_rethrow } from 'next/navigation';
+import { Spinner, toast } from '@/shared/ui-kit';
+import { logout } from '../api/logout';
+import { LOGOUT_ERROR_MESSAGE, type LogoutResult } from '../lib';
 import styles from './styles.module.scss';
 
-export const LogoutButton = () => {
-    const router = useRouter();
+const NETWORK_ERROR_RESULT: LogoutResult = { ok: false, error: 'unknown' };
 
-    const handleLogout = async () => {
-        await createBrowserClient().auth.signOut();
-        router.push('/login');
-        router.refresh();
+export const LogoutButton = () => {
+    const [isPending, startTransition] = useTransition();
+
+    const handleLogout = () => {
+        startTransition(async () => {
+            // При успехе action редиректит на /login: промис отклоняется redirect-ошибкой, её отдаём Next
+            await logout().catch((error) => {
+                unstable_rethrow(error);
+                return NETWORK_ERROR_RESULT;
+            });
+
+            toast.error(LOGOUT_ERROR_MESSAGE);
+        });
     };
 
     return (
-        <button type="button" onClick={handleLogout} className={styles.logoutButton}>
-            Выйти
+        <button
+            type="button"
+            disabled={isPending}
+            onClick={handleLogout}
+            className={styles.logoutButton}
+        >
+            {isPending ? <Spinner size="md" /> : 'Выйти'}
         </button>
     );
 };

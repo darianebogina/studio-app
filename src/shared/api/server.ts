@@ -12,3 +12,5 @@ export { getUserBooking } from './get-user-booking';
 export { getUserBookingsByLessonIds } from './get-user-bookings-by-lesson-ids';
 export { getUserUpcomingBookings } from './get-user-upcoming-bookings';
 export { getUserRole } from './get-user-role';
+export { setRoleCookie } from './role-cookie';
+export { clearRoleCookieServer } from './role-cookie/server';

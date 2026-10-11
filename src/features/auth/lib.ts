@@ -10,3 +10,7 @@ export const getAuthErrorMessage = (message: string, fallback: string) => {
     }
     return fallback;
 };
+
+export type LogoutResult = { ok: false; error: 'unknown' };
+
+export const LOGOUT_ERROR_MESSAGE = 'Не удалось выйти, попробуйте позже';

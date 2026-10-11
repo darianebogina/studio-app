@@ -1,6 +1,7 @@
 import { NextResponse, type NextRequest } from 'next/server';
 import { createServerClient } from '@supabase/ssr';
 import type { UserProfile } from '@/shared/types';
+import { getRoleCookie, setRoleCookie } from '../role-cookie';
 
 // Публичные роуты (не требуют логина)
 const PUBLIC_PATHS = ['/login', '/register', '/auth/callback', '/offline'];
@@ -63,14 +64,22 @@ export const updateSession = async (request: NextRequest) => {
         return supabaseResponse;
     }
 
-    // Роль запрашиваем только для ролевых разделов, чтобы не нагружать остальные запросы
-    const { data: profile } = await supabase
-        .from('users')
-        .select('role')
-        .eq('id', user.id)
-        .single<Pick<UserProfile, 'role'>>();
+    const cachedRole = getRoleCookie(request);
 
-    const isTeacher = profile?.role === 'teacher';
+    // Cookie с ролью ставится при входе. Если её нет (сессия старше cookie), берём роль из БД один раз и кэшируем
+    const role = cachedRole ?? (
+        await supabase
+            .from('users')
+            .select('role')
+            .eq('id', user.id)
+            .single<Pick<UserProfile, 'role'>>()
+    ).data?.role;
+
+    if (role && !cachedRole) {
+        setRoleCookie(role, supabaseResponse);
+    }
+
+    const isTeacher = role === 'teacher';
 
     // Не преподаватель идёт в кабинет преподавателя → в кабинет ученика
     if (isTeacherPath && !isTeacher) {
