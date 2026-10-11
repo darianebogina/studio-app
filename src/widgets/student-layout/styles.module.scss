@@ -6,7 +6,9 @@
     color: var(--color-text-primary);
 }
 
-// Отступ снизу, чтобы фиксированный таб-бар не перекрывал контент
+// Отступ снизу, чтобы фиксированный таб-бар не перекрывал контент.
+// Сверху — под статус-бар iOS: при black-translucent контент уходит под него
 .content {
+    padding-top: env(safe-area-inset-top, 0px);
     padding-bottom: calc(var(--tab-bar-height) + env(safe-area-inset-bottom, 0px));
 }
