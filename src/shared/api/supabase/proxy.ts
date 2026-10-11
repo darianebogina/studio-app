@@ -3,7 +3,7 @@ import { createServerClient } from '@supabase/ssr';
 import type { UserProfile } from '@/shared/types';
 
 // Публичные роуты (не требуют логина)
-const PUBLIC_PATHS = ['/login', '/register', '/auth/callback'];
+const PUBLIC_PATHS = ['/login', '/register', '/auth/callback', '/offline'];
 const GUEST_ONLY_PATHS = ['/login', '/register'];
 const TEACHER_PATHS = ['/teacher'];
 const STUDENT_PATHS = ['/home', '/calendar', '/bookings'];
