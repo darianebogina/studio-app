@@ -1,5 +1,6 @@
 import { NextResponse, type NextRequest } from 'next/server';
 import { createServerClient } from '@supabase/ssr';
+import { getSiteUrl } from '@/shared/lib/site-url';
 import type { UserProfile } from '@/shared/types';
 import { getRoleCookie, setRoleCookie } from '../role-cookie';
 
@@ -12,11 +13,7 @@ const STUDENT_PATHS = ['/home', '/calendar', '/bookings'];
 const matchesPath = (pathname: string, paths: string[]) =>
     paths.some((path) => pathname === path || pathname.startsWith(`${path}/`));
 
-const redirectTo = (request: NextRequest, pathname: string) => {
-    const url = request.nextUrl.clone();
-    url.pathname = pathname;
-    return NextResponse.redirect(url);
-};
+const redirectTo = (pathname: string) => NextResponse.redirect(getSiteUrl(pathname));
 
 export const updateSession = async (request: NextRequest) => {
     let supabaseResponse = NextResponse.next({ request });
@@ -49,12 +46,12 @@ export const updateSession = async (request: NextRequest) => {
 
     // Не залогинен и идёт на защищённую страницу → на логин
     if (!user && !isPublicPath) {
-        return redirectTo(request, '/login');
+        return redirectTo('/login');
     }
 
     // Залогинен и идёт на страницу входа/регистрации → на главную
     if (user && isGuestOnlyPath) {
-        return redirectTo(request, '/');
+        return redirectTo('/');
     }
 
     const isTeacherPath = matchesPath(pathname, TEACHER_PATHS);
@@ -83,12 +80,12 @@ export const updateSession = async (request: NextRequest) => {
 
     // Не преподаватель идёт в кабинет преподавателя → в кабинет ученика
     if (isTeacherPath && !isTeacher) {
-        return redirectTo(request, '/home');
+        return redirectTo('/home');
     }
 
     // Преподаватель идёт на страницы ученика → в свой кабинет
     if (isStudentPath && isTeacher) {
-        return redirectTo(request, '/teacher');
+        return redirectTo('/teacher');
     }
 
     return supabaseResponse;

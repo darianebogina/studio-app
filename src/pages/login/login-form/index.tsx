@@ -2,10 +2,12 @@
 
 import { useState, type ChangeEvent, type FormEvent } from 'react';
 import Link from 'next/link';
-import { getAuthErrorMessage, MagicLinkSent, sendOtp } from '@/features/auth';
+import { getAuthErrorMessage, MagicLinkSent, sendOtp, type SendOtpResult } from '@/features/auth';
 import type { FormStatus } from '@/shared/types';
 import { Spinner } from '@/shared/ui-kit';
 import styles from './styles.module.scss';
+
+const NETWORK_ERROR_RESULT: SendOtpResult = { ok: false, error: 'unknown' };
 
 export const LoginForm = () => {
     const [email, setEmail] = useState('');
@@ -19,11 +21,11 @@ export const LoginForm = () => {
         setStatus('loading');
         setErrorMessage('');
 
-        const { error } = await sendOtp({ email, shouldCreateUser: false });
+        const result = await sendOtp({ email, shouldCreateUser: false }).catch(() => NETWORK_ERROR_RESULT);
 
-        if (error) {
+        if (!result.ok) {
             setStatus('error');
-            setErrorMessage(getAuthErrorMessage(error.message, 'Не удалось отправить письмо. Попробуйте позже.'));
+            setErrorMessage(getAuthErrorMessage(result.error, 'Не удалось отправить письмо. Попробуйте позже.'));
             return;
         }
 

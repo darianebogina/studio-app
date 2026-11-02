@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react';
 import type { Metadata, Viewport } from 'next';
 import { Toaster } from 'sonner';
+import { SITE_URL } from '@/shared/lib/site-url';
 import { ConfirmDialogProvider, fontVariables } from '@/shared/ui-kit';
 import '@/shared/ui-kit/styles/tokens.scss';
 import '@/app/styles/globals.css';
@@ -10,6 +11,7 @@ type RootLayoutProps = Readonly<{
 }>;
 
 export const metadata: Metadata = {
+    metadataBase: new URL(SITE_URL),
     title: 'Танцевальная студия',
     description: 'Запись на занятия и управление абонементами',
     manifest: '/favicons/manifest.json',

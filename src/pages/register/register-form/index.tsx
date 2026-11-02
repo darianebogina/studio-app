@@ -2,11 +2,13 @@
 
 import { useState, type ChangeEvent, type FormEvent } from 'react';
 import Link from 'next/link';
-import { getAuthErrorMessage, MagicLinkSent, sendOtp } from '@/features/auth';
+import { getAuthErrorMessage, MagicLinkSent, sendOtp, type SendOtpResult } from '@/features/auth';
 import type { FormStatus } from '@/shared/types';
 import { Spinner } from '@/shared/ui-kit';
 import { INITIAL_DATA, type RegisterFormData } from './lib';
 import styles from './styles.module.scss';
+
+const NETWORK_ERROR_RESULT: SendOtpResult = { ok: false, error: 'unknown' };
 
 export const RegisterForm = () => {
     const [data, setData] = useState<RegisterFormData>(INITIAL_DATA);
@@ -21,7 +23,7 @@ export const RegisterForm = () => {
         setStatus('loading');
         setErrorMessage('');
 
-        const { error } = await sendOtp({
+        const result = await sendOtp({
             email: data.email,
             shouldCreateUser: true,
             userData: {
@@ -29,11 +31,11 @@ export const RegisterForm = () => {
                 last_name: data.lastName,
                 phone: data.phone,
             },
-        });
+        }).catch(() => NETWORK_ERROR_RESULT);
 
-        if (error) {
+        if (!result.ok) {
             setStatus('error');
-            setErrorMessage(getAuthErrorMessage(error.message, 'Не удалось создать аккаунт. Попробуйте позже.'));
+            setErrorMessage(getAuthErrorMessage(result.error, 'Не удалось создать аккаунт. Попробуйте позже.'));
             return;
         }
 

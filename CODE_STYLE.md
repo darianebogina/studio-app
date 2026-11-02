@@ -75,7 +75,7 @@ proxy.ts              # proxy (бывший middleware) Next.js
 
 - **Только стрелочные функции.** Ключевое слово `function` не используется нигде: ни в компонентах, ни в хендлерах, ни в методах объектов.
   ```ts
-  export const getAuthErrorMessage = (message: string, fallback: string) => {  };
+  export const getAuthErrorMessage = (error: SendOtpError, fallback: string) => {  };
   getAll: () => request.cookies.getAll()
   ```
 - **Только именованные экспорты.** `export default` запрещён в `src/`. Исключение — файлы корневого `app/`, где этого требует Next: там пиши `export { X as default } from ...`. Единственное место с объявлением и `export default` — `app/layout.tsx`.
@@ -160,13 +160,19 @@ proxy.ts              # proxy (бывший middleware) Next.js
 
 ## Тексты и комментарии
 
-- Все тексты UI на русском. Пользовательские ошибки переводятся через `getAuthErrorMessage(message, fallback)`, fallback обязателен.
+- Все тексты UI на русском. Ошибки входа переводятся через `getAuthErrorMessage(error, fallback)`: action `sendOtp` отдаёт код `SendOtpError`, fallback обязателен.
 - Слово после числа согласуй через `pluralize(count, [one, few, many])` из `@/shared/lib/plural`: `pluralize(n, ['записан', 'записаны', 'записано'])`.
 - Комментарии пиши на русском и только там, где неочевидно *почему* (например, `// ВАЖНО: не удалять этот getUser() — он и триггерит обновление сессии`). Не комментируй то, что и так видно из кода.
 
 ## Supabase
 
 - Браузерный клиент — `createBrowserClient` из `@/shared/api`. Серверный — `createClient as createServerClient` из `@/shared/api/supabase/server`.
+- Браузер пользователя не ходит на `supabase.co`: из России он может быть недоступен. Чтения, мутации и auth-запросы (`signInWithOtp` и т. п.) делаются на сервере, через Server Action или route handler.
+
+## Адрес сайта
+
+- Сайт открывают через nginx-прокси на VPS, а приложение на Vercel видит свой хост как `*.vercel.app`. Абсолютные URL (редиректы, ссылки в письмах, `metadataBase`) строй только через `getSiteUrl(path)` / `SITE_URL` из `@/shared/lib/site-url` (это `NEXT_PUBLIC_SITE_URL`). `request.url`, `nextUrl.origin`, `nextUrl.clone()` для редиректов, `headers().get('host')`, `VERCEL_URL` и `window.location.origin` для этого не используй.
+- Путь редиректа из query (`next`) перед `getSiteUrl` проверяй: только `/...` и не `//...`.
 - Ошибки Supabase возвращаются как `{ error }` и обрабатываются вызывающим кодом, исключения не бросаются.
 - Для типизированных запросов используй дженерик: `.single<UserProfile>()`.
 - Для списков используй `.overrideTypes<Lesson[], { merge: false }>()` (`.returns()` устарел) и возвращай `data ?? []`.
