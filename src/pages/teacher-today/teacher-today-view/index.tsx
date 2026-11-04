@@ -6,6 +6,7 @@ import { TeacherLessonModal } from '@/widgets/teacher-lesson-modal';
 import { TeacherTodayFab } from '@/widgets/teacher-today-fab';
 import { TeacherTodayLessons } from '@/widgets/teacher-today-lessons';
 import { TodayStats } from '@/widgets/today-stats';
+import { LogoutButton } from '@/features/auth';
 import { CreateLessonModal } from '@/features/create-lesson';
 import type { Lesson, LessonWithBookings, UserProfile } from '@/shared/types';
 import styles from './styles.module.scss';
@@ -39,6 +40,10 @@ export const TeacherTodayView = ({
             <TodayStats lessonsCount={lessonsCount} bookedCount={bookedCount} />
 
             <TeacherTodayLessons lessons={lessons} onSelectLesson={setSelectedLesson} />
+
+            <div className={styles.logout}>
+                <LogoutButton />
+            </div>
 
             <TeacherTodayFab onClick={handleOpenCreate} />
 

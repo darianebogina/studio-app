@@ -152,6 +152,7 @@ proxy.ts              # proxy (бывший middleware) Next.js
 - Имена классов пиши в camelCase: `.successTitle`, `.linkButton`.
 - Корневой элемент компонента получает класс по имени компонента в camelCase: `StudentTabBar` → `<nav className={styles.studentTabBar}>`, `LoginForm` → `.loginForm`.
 - Каждый модуль начинается с `@use '@/shared/ui-kit/styles' as *;`, чтобы подключить миксины.
+- Внутри файлов, которые подключаются через алиас (`shared/ui-kit/styles/_index.scss`), `@use`/`@forward` тоже пиши через `@/`: `@forward '@/shared/ui-kit/styles/typography'`. Относительные пути в таких файлах Turbopack ищет не от их папки и падает с `Can't find stylesheet to import`.
 - Все значения берутся из токенов `src/shared/ui-kit/styles/tokens.scss`: `var(--color-*)`, `var(--space-*)`, `var(--font-size-*)`, `var(--radius-*)`, `var(--border-thin)`, `var(--transition-fast)`. Хардкод px и цветов не используй. Если нужного токена нет, добавь его в `tokens.scss`.
 - Для типографики используй миксины `text-display`, `text-title`, `text-subtitle`, `text-body`, `text-secondary`, `text-caption` вместо ручного набора `font-size` + `line-height`.
 - Для кнопок используй `@include reset-button`, для disabled-состояния — `@include disabled`.
