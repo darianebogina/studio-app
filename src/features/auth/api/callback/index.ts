@@ -1,19 +1,15 @@
 import { NextResponse, type NextRequest } from 'next/server';
-import type { EmailOtpType } from '@supabase/supabase-js';
 import { setRoleCookie } from '@/shared/api/server';
 import { createClient as createServerClient } from '@/shared/api/supabase/server';
 import { getSiteUrl } from '@/shared/lib/site-url';
 import type { UserProfile } from '@/shared/types';
-import { EMAIL_OTP_TYPES } from '../../lib';
+import { isEmailOtpType } from '../../lib';
 
 type VerifyEmailLinkParams = {
     tokenHash: string | null;
     type: string | null;
     code: string | null;
 };
-
-const isEmailOtpType = (value: string | null): value is EmailOtpType =>
-    EMAIL_OTP_TYPES.some((type) => type === value);
 
 // Пускаем только на свои пути: '//evil.com' от SITE_URL дал бы чужой хост
 const getSafeNext = (next: string | null) =>

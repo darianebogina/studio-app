@@ -5,7 +5,7 @@ import type { UserProfile } from '@/shared/types';
 import { getRoleCookie, setRoleCookie } from '../role-cookie';
 
 // Публичные роуты (не требуют логина)
-const PUBLIC_PATHS = ['/login', '/register', '/auth/callback', '/offline'];
+const PUBLIC_PATHS = ['/login', '/register', '/auth/callback', '/auth/confirm', '/offline'];
 const GUEST_ONLY_PATHS = ['/login', '/register'];
 const TEACHER_PATHS = ['/teacher'];
 const STUDENT_PATHS = ['/home', '/calendar', '/bookings'];
