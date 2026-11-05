@@ -2,7 +2,7 @@
 
 import { useState, type ChangeEvent, type FormEvent } from 'react';
 import Link from 'next/link';
-import { getAuthErrorMessage, MagicLinkSent, sendOtp, type SendOtpResult } from '@/features/auth';
+import { getAuthErrorMessage, OtpCodeForm, sendOtp, type SendOtpResult } from '@/features/auth';
 import type { FormStatus } from '@/shared/types';
 import { Spinner } from '@/shared/ui-kit';
 import styles from './styles.module.scss';
@@ -25,22 +25,20 @@ export const LoginForm = () => {
 
         if (!result.ok) {
             setStatus('error');
-            setErrorMessage(getAuthErrorMessage(result.error, 'Не удалось отправить письмо. Попробуйте позже.'));
+            setErrorMessage(getAuthErrorMessage(result.error, 'Не удалось отправить код. Попробуйте позже.'));
             return;
         }
 
         setStatus('success');
     };
 
-    const handleReset = () => setStatus('idle');
+    const handleChangeEmail = () => setStatus('idle');
 
     if (status === 'success') {
         return (
-            <MagicLinkSent
-                email={email}
-                text="отправлена ссылка для входа. Откройте её на этом устройстве."
-                onReset={handleReset}
-                resetLabel="Отправить ещё раз"
+            <OtpCodeForm
+                sendParams={{ email, shouldCreateUser: false }}
+                onChangeEmail={handleChangeEmail}
             />
         );
     }
@@ -66,7 +64,7 @@ export const LoginForm = () => {
                 disabled={isLoading || !email}
                 className={styles.button}
             >
-                {isLoading ? <Spinner size="md" color="dark" /> : 'Прислать ссылку'}
+                {isLoading ? <Spinner size="md" color="dark" /> : 'Прислать код'}
             </button>
 
             <Link href="/register" className={styles.link}>

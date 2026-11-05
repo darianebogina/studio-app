@@ -2,7 +2,7 @@
 
 import { useState, type ChangeEvent, type FormEvent } from 'react';
 import Link from 'next/link';
-import { getAuthErrorMessage, MagicLinkSent, sendOtp, type SendOtpResult } from '@/features/auth';
+import { getAuthErrorMessage, OtpCodeForm, sendOtp, type SendOtpParams, type SendOtpResult } from '@/features/auth';
 import type { FormStatus } from '@/shared/types';
 import { Spinner } from '@/shared/ui-kit';
 import { INITIAL_DATA, type RegisterFormData } from './lib';
@@ -15,6 +15,16 @@ export const RegisterForm = () => {
     const [status, setStatus] = useState<FormStatus>('idle');
     const [errorMessage, setErrorMessage] = useState('');
 
+    const sendParams: SendOtpParams = {
+        email: data.email,
+        shouldCreateUser: true,
+        userData: {
+            first_name: data.firstName,
+            last_name: data.lastName,
+            phone: data.phone,
+        },
+    };
+
     const updateField = (field: keyof RegisterFormData) => (e: ChangeEvent<HTMLInputElement>) =>
         setData((prev) => ({ ...prev, [field]: e.target.value }));
 
@@ -23,15 +33,7 @@ export const RegisterForm = () => {
         setStatus('loading');
         setErrorMessage('');
 
-        const result = await sendOtp({
-            email: data.email,
-            shouldCreateUser: true,
-            userData: {
-                first_name: data.firstName,
-                last_name: data.lastName,
-                phone: data.phone,
-            },
-        }).catch(() => NETWORK_ERROR_RESULT);
+        const result = await sendOtp(sendParams).catch(() => NETWORK_ERROR_RESULT);
 
         if (!result.ok) {
             setStatus('error');
@@ -42,11 +44,13 @@ export const RegisterForm = () => {
         setStatus('success');
     };
 
+    const handleChangeEmail = () => setStatus('idle');
+
     if (status === 'success') {
         return (
-            <MagicLinkSent
-                email={data.email}
-                text="отправлена ссылка. Откройте её на этом устройстве — после подтверждения аккаунт будет создан."
+            <OtpCodeForm
+                sendParams={sendParams}
+                onChangeEmail={handleChangeEmail}
             />
         );
     }
@@ -118,7 +122,7 @@ export const RegisterForm = () => {
                 {isLoading ? <Spinner size="md" color="dark" /> : 'Создать аккаунт'}
             </button>
 
-            <p className={styles.hint}>На email придёт ссылка для подтверждения</p>
+            <p className={styles.hint}>На email придёт код для подтверждения</p>
 
             <Link href="/login" className={styles.link}>
                 У меня уже есть аккаунт

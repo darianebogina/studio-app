@@ -78,6 +78,8 @@
     --fab-size: 52px;
     --spinner-size-sm: 14px;
     --spinner-size-md: 20px;
+    --otp-cell-width: 48px;
+    --otp-cell-height: 56px;
 
     // Скругления
     --radius-xs: 6px;
@@ -87,6 +89,7 @@
 
     // Границы
     --border-width-thin: 0.5px;
+    --border-width-regular: 1px;
     --border-width-medium: 2px;
     --border-width-accent: 3px;
     --border-thin: var(--border-width-thin) solid var(--color-border);

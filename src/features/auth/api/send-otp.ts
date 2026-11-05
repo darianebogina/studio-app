@@ -2,19 +2,7 @@
 
 import { createClient as createServerClient } from '@/shared/api/supabase/server';
 import { getSiteUrl } from '@/shared/lib/site-url';
-import { getSendOtpError, type SendOtpResult } from '../lib';
-
-type MagicLinkUserData = {
-    first_name: string;
-    last_name: string;
-    phone: string;
-};
-
-type SendOtpParams = {
-    email: string;
-    shouldCreateUser: boolean;
-    userData?: MagicLinkUserData;
-};
+import { getSendOtpError, type SendOtpParams, type SendOtpResult } from '../lib';
 
 // Отправляем с сервера, чтобы браузер пользователя не ходил на supabase.co напрямую
 export const sendOtp = async ({ email, shouldCreateUser, userData }: SendOtpParams): Promise<SendOtpResult> => {

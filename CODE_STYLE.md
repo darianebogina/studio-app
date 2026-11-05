@@ -105,7 +105,7 @@ proxy.ts              # proxy (бывший middleware) Next.js
 - Порядок внутри компонента:
   1. хуки состояния (`useState`, ...)
   2. хендлеры (`handleSubmit`, фабрики вроде `updateField(field)`)
-  3. ранние `return` для альтернативных состояний (`if (status === 'success') return <MagicLinkSent ... />`)
+  3. ранние `return` для альтернативных состояний (`if (status === 'success') return <OtpCodeForm ... />`)
   4. производные значения (`const isLoading = status === 'loading'`)
   5. основной `return` JSX
 - Пропсы типизируются через `type <Component>Props` над компонентом и деструктурируются в сигнатуре.
@@ -119,6 +119,7 @@ proxy.ts              # proxy (бывший middleware) Next.js
 - Пока кнопка ждёт ответа, вместо текста показывай `Spinner` из `@/shared/ui-kit`: `{isPending ? <Spinner size="md" color="dark" /> : 'Сохранить'}`. Тексты вроде «Сохраняем...» не пиши. На зелёных кнопках `color="dark"`, на остальных — дефолтный `light`.
 - Пока грузятся данные, показывай `Skeleton` из `@/shared/ui-kit` прямо в компоненте, который их грузит. Отдельных компонентов-скелетонов, их экспорта и `loading.tsx` нет. В клиентском компоненте: `{isLoading && Array.from({ length: 3 }).map((_, index) => <Skeleton key={index} height={52} />)}`. Серверная страница оборачивает загрузку в `<Suspense fallback={...скелетоны...}>`, а сама загрузка лежит во вложенном async-компоненте рядом: `pages/student-bookings/student-bookings-content/`.
 - Деструктивные действия подтверждай через `await confirm(options)` из `@/shared/ui-kit` (promise-based, провайдер уже стоит в корневом layout). `window.confirm` не используй. Опции подтверждения — константа `CONFIRM_OPTIONS` в `lib.ts` фичи.
+- Вход и регистрация идут по коду из письма (длина — `OTP_LENGTH` в `features/auth/lib.ts`, совпадает с Email OTP Length в Supabase), ссылок в письмах нет: шаг с кодом — `OtpCodeForm` из `@/features/auth`, клетки для ввода — `OtpInput` из `@/shared/ui-kit`. Код проверяет Server Action `verifyCode`, чтобы сессия появилась в том же браузере, где ввели email.
 - Для атрибутов JSX используй двойные кавычки (`type="email"`), для строк в TS — одинарные.
 
 ## Форматирование
@@ -154,6 +155,7 @@ proxy.ts              # proxy (бывший middleware) Next.js
 - Каждый модуль начинается с `@use '@/shared/ui-kit/styles' as *;`, чтобы подключить миксины.
 - Внутри файлов, которые подключаются через алиас (`shared/ui-kit/styles/_index.scss`), `@use`/`@forward` тоже пиши через `@/`: `@forward '@/shared/ui-kit/styles/typography'`. Относительные пути в таких файлах Turbopack ищет не от их папки и падает с `Can't find stylesheet to import`.
 - Все значения берутся из токенов `src/shared/ui-kit/styles/tokens.scss`: `var(--color-*)`, `var(--space-*)`, `var(--font-size-*)`, `var(--radius-*)`, `var(--border-thin)`, `var(--transition-fast)`. Хардкод px и цветов не используй. Если нужного токена нет, добавь его в `tokens.scss`.
+- Цветную рамку кнопки (например, красную у «Выйти») делай `var(--border-width-regular)` (1px). `--border-width-thin` (0.5px) годится только для серых разделителей: на Android с дробной плотностью пикселей рамка в полпикселя пропадает с части сторон, и кнопка выглядит обрезанной.
 - Для типографики используй миксины `text-display`, `text-title`, `text-subtitle`, `text-body`, `text-secondary`, `text-caption` вместо ручного набора `font-size` + `line-height`.
 - Для кнопок используй `@include reset-button`, для disabled-состояния — `@include disabled`.
 - Сначала `@include`, затем свойства, затем вложенные `&:focus`, `&::placeholder`, `&:hover` и дочерние селекторы.
