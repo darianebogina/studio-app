@@ -15,14 +15,14 @@ type TeacherTodayViewProps = {
     user: UserProfile;
     lessons: LessonWithBookings[];
     lessonsCount: number;
-    bookedCount: number;
+    studentsCount: number;
 };
 
 export const TeacherTodayView = ({
     user,
     lessons,
     lessonsCount,
-    bookedCount,
+    studentsCount,
 }: TeacherTodayViewProps) => {
     const [selectedLesson, setSelectedLesson] = useState<Lesson | null>(null);
     const [isOpenCreate, setIsOpenCreate] = useState(false);
@@ -37,7 +37,7 @@ export const TeacherTodayView = ({
                 <ProfileHeader user={user} />
             </div>
 
-            <TodayStats lessonsCount={lessonsCount} bookedCount={bookedCount} />
+            <TodayStats lessonsCount={lessonsCount} studentsCount={studentsCount} />
 
             <TeacherTodayLessons lessons={lessons} onSelectLesson={setSelectedLesson} />
 

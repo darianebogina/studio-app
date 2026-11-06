@@ -3,10 +3,10 @@ import styles from './styles.module.scss';
 
 type TodayStatsProps = {
     lessonsCount: number;
-    bookedCount: number;
+    studentsCount: number;
 };
 
-export const TodayStats = ({ lessonsCount, bookedCount }: TodayStatsProps) => (
+export const TodayStats = ({ lessonsCount, studentsCount }: TodayStatsProps) => (
     <div className={styles.todayStats}>
         <div className={styles.tile}>
             <span className={styles.value}>{lessonsCount}</span>
@@ -16,9 +16,9 @@ export const TodayStats = ({ lessonsCount, bookedCount }: TodayStatsProps) => (
         </div>
 
         <div className={styles.tile}>
-            <span className={styles.value}>{bookedCount}</span>
+            <span className={styles.value}>{studentsCount}</span>
             <span className={styles.label}>
-                {pluralize(bookedCount, ['ученик', 'ученика', 'учеников'])}
+                {pluralize(studentsCount, ['ученик всего', 'ученика всего', 'учеников всего'])}
             </span>
         </div>
     </div>

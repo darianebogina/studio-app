@@ -1,0 +1,25 @@
+@use '@/shared/ui-kit/styles' as *;
+
+.removeStudentButton {
+    @include reset-button;
+    @include disabled;
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    width: var(--space-6);
+    height: var(--space-6);
+    border-radius: var(--radius-sm);
+    color: var(--color-text-muted);
+    transition: color var(--transition-fast), background var(--transition-fast);
+
+    &:hover:not(:disabled) {
+        background: var(--color-danger-bg);
+        color: var(--color-danger);
+    }
+
+    &:focus-visible {
+        outline: var(--border-width-thin) solid var(--color-text-primary);
+        outline-offset: var(--space-1);
+    }
+}

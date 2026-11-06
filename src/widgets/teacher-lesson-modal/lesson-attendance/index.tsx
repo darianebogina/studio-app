@@ -4,6 +4,7 @@ import { useEffect, useState, useTransition } from 'react';
 import { UserPlus } from 'lucide-react';
 import { CancelLessonButton } from '@/features/cancel-lesson-teacher';
 import { getMarkAttendanceErrorMessage, markAttendance, type MarkAttendanceResult } from '@/features/mark-attendance';
+import { RemoveStudentButton } from '@/features/remove-student-from-lesson';
 import { pluralize } from '@/shared/lib/plural';
 import type { BookingWithStudent, Lesson } from '@/shared/types';
 import { Skeleton, Spinner, toast } from '@/shared/ui-kit';
@@ -76,6 +77,12 @@ export const LessonAttendance = ({ lesson, reloadKey, onAddStudent, onClose }: L
             ? new Set([...prev].filter((id) => id !== bookingId))
             : new Set([...prev, bookingId])
     ));
+
+    // Убираем строку локально, без перечитывания: остальные галки преподавателя при этом сохраняются
+    const handleRemoved = (bookingId: string) => {
+        setBookings((prev) => prev && prev.filter(({ booking }) => booking.id !== bookingId));
+        setAttendedBookingIds((prev) => new Set([...prev].filter((id) => id !== bookingId)));
+    };
 
     // Отправляем состояние всех чекбоксов: что отметить, а что откатить, сервер решает по статусам из БД
     const handleSave = () => {
@@ -154,9 +161,21 @@ export const LessonAttendance = ({ lesson, reloadKey, onAddStudent, onClose }: L
                                         <span className={styles.name}>{user.first_name} {user.last_name}</span>
                                     </label>
 
-                                    <span className={`${styles.balance} ${isBalanceEmpty ? styles.balanceEmpty : ''}`}>
-                                        {balance ? `${balance.remaining}/${balance.total}` : NO_SUBSCRIPTION_LABEL}
-                                    </span>
+                                    <div className={styles.studentAside}>
+                                        <span className={`${styles.balance} ${isBalanceEmpty ? styles.balanceEmpty : ''}`}>
+                                            {balance ? `${balance.remaining}/${balance.total}` : NO_SUBSCRIPTION_LABEL}
+                                        </span>
+
+                                        {/* Отмеченного не убираем: по нему уже списано занятие, сначала нужно снять отметку */}
+                                        {booking.status === 'booked' && (
+                                            <RemoveStudentButton
+                                                bookingId={booking.id}
+                                                studentName={`${user.first_name} ${user.last_name}`}
+                                                disabled={isPending}
+                                                onRemoved={() => handleRemoved(booking.id)}
+                                            />
+                                        )}
+                                    </div>
                                 </li>
                             );
                         })}
