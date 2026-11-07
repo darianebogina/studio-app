@@ -20,8 +20,8 @@ export const getStudentsNotOnLesson = async (lessonId: string): Promise<UserProf
         .from('users')
         .select('*')
         .eq('role', 'student')
-        .order('last_name', { ascending: true })
-        .order('first_name', { ascending: true });
+        .order('first_name', { ascending: true })
+        .order('last_name', { ascending: true });
 
     const { data } = await (bookedUserIds.length > 0
         ? query.not('id', 'in', `(${bookedUserIds.join(',')})`)

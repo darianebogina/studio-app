@@ -16,8 +16,8 @@ export const getAllStudents = async (): Promise<StudentWithSubscription[]> => {
         .eq('role', 'student')
         .eq('subscriptions.is_active', true)
         .order('purchased_at', { referencedTable: 'subscriptions', ascending: true })
-        .order('last_name', { ascending: true })
         .order('first_name', { ascending: true })
+        .order('last_name', { ascending: true })
         .overrideTypes<StudentRow[], { merge: false }>();
 
     return (data ?? []).map(({ subscriptions, ...user }) => ({
